@@ -20,7 +20,7 @@ namespace JWTAPI.Models
         {
             modelBuilder.Entity<UserInfo>(entity =>
             {
-                entity.HasNoKey();
+               // entity.HasNoKey();
                 entity.ToTable("UserInfo");
                 entity.Property(e => e.UserId).HasColumnName("UserId");
                 entity.Property(e => e.DisplayName).HasMaxLength(60).IsUnicode(false);
@@ -28,6 +28,7 @@ namespace JWTAPI.Models
                 entity.Property(e => e.Email).HasMaxLength(50).IsUnicode(false);
                 entity.Property(e => e.Password).HasMaxLength(20).IsUnicode(false);
                 entity.Property(e => e.CreatedDate).IsUnicode(false);
+                entity.Property(e => e.LastLogin).IsUnicode(false);
             });
 
             modelBuilder.Entity<Employee>(entity =>

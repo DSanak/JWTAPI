@@ -50,6 +50,13 @@ namespace JWTAPI.Controllers
                         expires: DateTime.UtcNow.AddMinutes(10),
                         signingCredentials: signIn);
 
+                    //Add Timestamp for Last login to DB
+                    var data = DateTime.UtcNow;
+
+                    _context.Entry(user).State = EntityState.Modified;
+                    user.LastLogin = data;
+                    _context.SaveChanges();
+
                     return Ok(new JwtSecurityTokenHandler().WriteToken(token));
                 }
                 else

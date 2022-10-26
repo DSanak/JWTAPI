@@ -1,12 +1,13 @@
 ﻿using JWTAPI.Interface;
 using JWTAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JWTAPI.Controllers
 {
-    
+    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
