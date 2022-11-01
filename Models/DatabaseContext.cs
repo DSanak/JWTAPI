@@ -15,9 +15,20 @@ namespace JWTAPI.Models
 
         public virtual DbSet<Employee>? Employees { get; set; }
         public virtual DbSet<UserInfo>? UserInfos { get; set; }
+        public virtual DbSet<Logs>? Loging { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Logs>(entity =>
+            {
+                // entity.HasNoKey();
+                entity.ToTable("Logs");
+                entity.Property(e => e.userID).HasColumnName("userID");
+                entity.Property(e => e.Timestamp).IsUnicode(false);
+                entity.Property(e => e.Descryption).HasMaxLength(60).IsUnicode(false);
+            });
+
+
             modelBuilder.Entity<UserInfo>(entity =>
             {
                // entity.HasNoKey();
