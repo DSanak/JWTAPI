@@ -15,16 +15,19 @@ namespace JWTAPI.Controllers
     {
         public IConfiguration _configuration;
         private readonly DatabaseContext _context;
+        private readonly IUser _IUser;
 
-        public TokenController(IConfiguration config, DatabaseContext context)
+        public TokenController(IConfiguration config, DatabaseContext context,IUser user)
         {
             _configuration = config;
             _context = context;
+            _IUser = user;
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(UserInfo _userData)
         {
+
             if (_userData != null && _userData.Email != null && _userData.Password != null)
             {
                 var user = await GetUser(_userData.Email, _userData.Password);
@@ -55,18 +58,18 @@ namespace JWTAPI.Controllers
 
                     //Add Timestamp for Last login to DB
                     var data = DateTime.Now;
-                    var user_id = _userData.UserId;
+                 //   var user_id = _userData.UserId;
 
-                    
-/*
                     var t = new Logs
                     {
-                        userID = user_id,
-                        Descryption = "Blabla",
+                        userID = user.UserId,
+                        Descryption = "Use token by "+user.Email,
                         Timestamp = data
                     };
-                    _context.Add(t);
-                    _context.SaveChanges();*/
+
+                    _IUser.AddLogs(t);
+
+
 
 
 
