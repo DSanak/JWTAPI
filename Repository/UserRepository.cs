@@ -58,6 +58,19 @@ namespace JWTAPI.Repository
             }
         }
 
+        public void AddLogs(Logs logs)
+        {
+            try
+            {
+                _dbContext.Loging.Add(logs);
+                _dbContext.SaveChanges();
+
+            }catch
+            {
+                throw;
+            }
+        }
+
         public void UpdateUser(UserInfo users)
         {
             try
