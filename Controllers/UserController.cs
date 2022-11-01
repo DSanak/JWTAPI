@@ -23,6 +23,7 @@ namespace JWTAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
         {
+            
             return await Task.FromResult(_IUser.GetUserDetails());
         }
 
@@ -35,7 +36,18 @@ namespace JWTAPI.Controllers
             {
                 return NotFound();
             }
+            var data = DateTime.Now;
+
+            var t = new Logs
+            {
+                userID = id,
+                Descryption = "Blabla",
+                Timestamp = data
+            };
+
+            _IUser.AddLogs(t);
             return users;
+
         }
 
         // POST api/user

@@ -1,4 +1,5 @@
-﻿using JWTAPI.Models;
+﻿using JWTAPI.Interface;
+using JWTAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -28,6 +29,8 @@ namespace JWTAPI.Controllers
             {
                 var user = await GetUser(_userData.Email, _userData.Password);
 
+
+
                 if (user != null)
                 {
                     //create claims details based on the user information
@@ -51,11 +54,31 @@ namespace JWTAPI.Controllers
                         signingCredentials: signIn);
 
                     //Add Timestamp for Last login to DB
-                    var data = DateTime.UtcNow;
+                    var data = DateTime.Now;
+                    var user_id = _userData.UserId;
 
-                    _context.Entry(user).State = EntityState.Modified;
-                    user.LastLogin = data;
-                    _context.SaveChanges();
+                    
+/*
+                    var t = new Logs
+                    {
+                        userID = user_id,
+                        Descryption = "Blabla",
+                        Timestamp = data
+                    };
+                    _context.Add(t);
+                    _context.SaveChanges();*/
+
+
+
+
+                    /*         _context.Entry(user).State = EntityState.Modified;
+
+                             user.LastLogin = data;
+                             _context.SaveChanges();*/
+
+
+
+                    //contex jako LOGS      _context.Entry()
 
                     return Ok(new JwtSecurityTokenHandler().WriteToken(token));
                 }
@@ -74,5 +97,7 @@ namespace JWTAPI.Controllers
         {
             return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
+      
+      
     }
 }
