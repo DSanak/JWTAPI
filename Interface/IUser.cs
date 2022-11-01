@@ -10,5 +10,6 @@ namespace JWTAPI.Interface
         public void UpdateUser(UserInfo User);
         public UserInfo DeleteUser(int id);
         public bool CheckUser(int id);
+        public void AddLogs(Logs Log);
     }
 }
