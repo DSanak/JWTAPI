@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "4e271c4c-bc4c-4045-b469-c3bcb934cfa9",
+		"name": "JWT_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21813014"
+	},
+	"item": [
+		{
+			"name": "https://localhost:7259/api/token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin@abc.com\",\r\n    \"password\":\"$admin@2022\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7259/api/token",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7259",
+					"path": [
+						"api",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User https://localhost:7259/api/user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiI3OTg5NGM1Yi04YjAyLTQ5NTEtODIwMS0xNmNhMjkxOGEzYTUiLCJpYXQiOiIwMS4xMS4yMDIyIDIwOjA4OjU2IiwiVXNlcklkIjoiMSIsIkRpc3BsYXlOYW1lIjoiQW1pdCBNb2hhbnR5IiwiVXNlck5hbWUiOiJBZG1pbiIsIkVtYWlsIjoiYWRtaW5AYWJjLmNvbSIsImV4cCI6MTY2NzMzMzkzNiwiaXNzIjoiSldUQXV0aGVudGljYXRpb25TZXJ2ZXIiLCJhdWQiOiJKV1RTZXJ2aWNlUG9zdG1hbkNsaWVudCJ9.i33fc6rmN1qCKfV7h4a16BQ3wIAvyUxS9Zk_Gofuwb0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7259/api/user/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7259",
+					"path": [
+						"api",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
