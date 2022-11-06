@@ -8,6 +8,7 @@ namespace JWTAPI.Repository
     {
         readonly DatabaseContext _dbContext = new();
 
+
         public UserRepository(DatabaseContext dbContext)
         {
             _dbContext = dbContext;

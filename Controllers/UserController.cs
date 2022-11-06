@@ -1,9 +1,11 @@
 ﻿using JWTAPI.Interface;
 using JWTAPI.Models;
+using JWTAPI.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RTools_NTS.Util;
 
 namespace JWTAPI.Controllers
 {
@@ -23,7 +25,15 @@ namespace JWTAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
         {
-            
+            var data = DateTime.Now;
+            var t = new Logs
+            {
+                userID = Singleton.Instance.saveIdusera,
+                Descryption = $"Wyswietlenie usera",
+                Timestamp = data
+            };
+
+            _IUser.AddLogs(t);
             return await Task.FromResult(_IUser.GetUserDetails());
         }
 
@@ -40,7 +50,8 @@ namespace JWTAPI.Controllers
 
             var t = new Logs
             {
-                userID = id,
+
+                userID = Singleton.Instance.saveIdusera, 
                 Descryption = "Blabla",
                 Timestamp = data
             };

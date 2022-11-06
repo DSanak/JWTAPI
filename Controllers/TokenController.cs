@@ -1,6 +1,7 @@
 ﻿using JWTAPI.Interface;
 using JWTAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -17,7 +18,7 @@ namespace JWTAPI.Controllers
         private readonly DatabaseContext _context;
         private readonly IUser _IUser;
 
-        public TokenController(IConfiguration config, DatabaseContext context,IUser user)
+        public TokenController(IConfiguration config, DatabaseContext context, IUser user)
         {
             _configuration = config;
             _context = context;
@@ -58,30 +59,17 @@ namespace JWTAPI.Controllers
 
                     //Add Timestamp for Last login to DB
                     var data = DateTime.Now;
-                 //   var user_id = _userData.UserId;
+                    //   var user_id = _userData.UserId;
 
                     var t = new Logs
                     {
                         userID = user.UserId,
-                        Descryption = "Use token by "+user.Email,
+                        Descryption = "Use token by " + user.Email,
                         Timestamp = data
                     };
-
+                    Singleton.Instance.saveIdusera = user.UserId;
                     _IUser.AddLogs(t);
 
-
-
-
-
-
-                    /*         _context.Entry(user).State = EntityState.Modified;
-
-                             user.LastLogin = data;
-                             _context.SaveChanges();*/
-
-
-
-                    //contex jako LOGS      _context.Entry()
 
                     return Ok(new JwtSecurityTokenHandler().WriteToken(token));
                 }
@@ -100,7 +88,7 @@ namespace JWTAPI.Controllers
         {
             return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
-      
-      
+
+
     }
 }
