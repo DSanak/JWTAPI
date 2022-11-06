@@ -6,16 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RTools_NTS.Util;
-using JWTAPI.Pages;
-using JWTAPI.Pages.Shared;
-using System.Text;
-using System.Net;
-using System.Net.Http.Formatting;
-using System.Text.RegularExpressions;
 
 namespace JWTAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -38,31 +32,13 @@ namespace JWTAPI.Controllers
                 Descryption = $"Wyswietlenie usera",
                 Timestamp = data
             };
-            string pathToHtmlFile = $"{Environment.CurrentDirectory}\\Pages\\index.html";
-            if (!System.IO.File.Exists(pathToHtmlFile))
-            {
-                var a = "<h1>Brak takiej strony</h1>";
-                return base.Content(a, "html/txt");
-            }
-            
-            
 
-                _IUser.AddLogs(t);
-            
-                return await Task.FromResult(_IUser.GetUserDetails());
-            
-        }
-        [Route("page")]
-        [HttpGet]
-        public ActionResult Strona()
-        {
-            var fileContent = System.IO.File.ReadAllText("Pages/index.html");
-            return base.Content(fileContent, "text/html");
+            _IUser.AddLogs(t);
+            return await Task.FromResult(_IUser.GetUserDetails());
         }
 
-
-    // GET api/user/5
-    [HttpGet("{id}")]
+        // GET api/user/5
+        [HttpGet("{id}")]
         public async Task<ActionResult<UserInfo>> Get(int id)
         {
             var users = await Task.FromResult(_IUser.GetUserDetails(id));
@@ -84,6 +60,7 @@ namespace JWTAPI.Controllers
             return users;
 
         }
+
         // POST api/user
         [HttpPost]
         public async Task<ActionResult<UserInfo>> Post(UserInfo users)

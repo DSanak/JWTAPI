@@ -8,7 +8,7 @@
 
         Singleton()
         {
-            saveIdusera = 1;
+            saveIdusera = 0;
         }
 
         public static Singleton Instance
