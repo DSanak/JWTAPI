@@ -1,13 +1,56 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+
+    <script type="text/javascript">
+
+
+        
+        var savetoken;
+        async function token() {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "email": document.getElementById("login").value,
+                "password": document.getElementById("password").value
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("https://localhost:7259/api/token", requestOptions)
+                .then(response => response.text())
+                .then(function (result) {
+                    savetoken= result;
+                    console.log(savetoken);
+                })
+                .catch(error => console.log('error', error));
+
+        }
+
+      
+
+
+    </script>
+
 </head>
 <body>
-    <h1> Coś tu jest</h1>
 
-    <button value="ddd" type="submit" id="subButton">XXX</button>
+    <h1>Hello, pls zaloguj się</h1>
+
+    <input type="text" id="login" />
+    <input type="password" id="password" />
+    <input type="submit" value="Zaloguj" onclick="logIn()" />
+    <input type="submit" value="Token" onclick="token()" />
+    <input type="submit" value="Show Token" onclick="showToken()" />
+
+    <div id="wynik"></div>
 
 </body>
 </html>
