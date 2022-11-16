@@ -5,9 +5,7 @@
 
     <script type="text/javascript">
 
-
-        
-        var savetoken;
+        let savetoken;
         async function token() {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -27,14 +25,31 @@
             fetch("https://localhost:7259/api/token", requestOptions)
                 .then(response => response.text())
                 .then(function (result) {
-                    savetoken= result;
-                    console.log(savetoken);
+                    savetoken = result;
+                    console.log("zapisany token: " + savetoken);
                 })
                 .catch(error => console.log('error', error));
 
+            //ogarnąc jak pobrać response.status i zrobić if z redirect na inną stronę
+
+            /*
+               const res = await fetch("https://localhost:7259/api/token", requestOptions)
+                   .catch(error => console.log('error',error));
+
+               const tokenREL = await res.json();
+
+               console.log(res.status, tokenREL);
+
+
+.then(function (response) {
+                     console.log(response.status); // Will show you the status
+                     if (!response.ok) {
+                         throw new Error("HTTP status " + response.status);
+                     }
+                     return response.json();
+               */
         }
 
-      
 
 
     </script>

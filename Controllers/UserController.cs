@@ -12,6 +12,7 @@ using System.Text;
 using System.Net;
 using System.Net.Http.Formatting;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography.Xml;
 
 namespace JWTAPI.Controllers
 {
