@@ -1,18 +1,20 @@
 ﻿<!DOCTYPE html>
 <html lang="pl">
-<head>
+<head id="head1" runat="server">
     <meta charset="utf-8" />
 
     <script type="text/javascript">
 
-        let savetoken;
+        var savetoken;
         async function token() {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
-                "email": document.getElementById("login").value,
-                "password": document.getElementById("password").value
+                //"email": document.getElementById("login").value,
+                //"password": document.getElementById("password").value   
+                "email": "test@abc.com",
+                "password":"$test@2022"
             });
 
             var requestOptions = {
@@ -23,12 +25,17 @@
             };
 
             fetch("https://localhost:7259/api/token", requestOptions)
-                .then(response => response.text())
-                .then(function (result) {
-                    savetoken = result;
-                    console.log("zapisany token: " + savetoken);
+                .then(response => {
+                    if (response.ok) {
+                        window.location.replace("https://localhost:7259/api/user/homepage")
+                        return response.text()
+                    }
+                })
+                .then(data => {
+                    savetoken = data;
                 })
                 .catch(error => console.log('error', error));
+
 
             //ogarnąc jak pobrać response.status i zrobić if z redirect na inną stronę
 
@@ -50,6 +57,10 @@
                */
         }
 
+        function redirect() {
+            window.location.replace("https://localhost:7259/api/user/homepage")
+        }
+
 
 
     </script>
@@ -64,6 +75,7 @@
     <input type="submit" value="Zaloguj" onclick="logIn()" />
     <input type="submit" value="Token" onclick="token()" />
     <input type="submit" value="Show Token" onclick="showToken()" />
+    <input type="submit" value="redirect" onclick="redirect()" />
 
     <div id="wynik"></div>
 
