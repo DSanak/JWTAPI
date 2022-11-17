@@ -59,11 +59,24 @@ namespace JWTAPI.Controllers
         {
             var fileContent = System.IO.File.ReadAllText("Pages/index.html");
             return base.Content(fileContent, "text/html");
+
+           
+        }
+
+        [Route("homepage")]
+        [HttpGet]
+        public ActionResult HomePage()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/home.html");
+            return base.Content(fileContent, "text/html");
+
+
         }
 
 
-    // GET api/user/5
-    [HttpGet("{id}")]
+
+        // GET api/user/5
+        [HttpGet("{id}")]
         public async Task<ActionResult<UserInfo>> Get(int id)
         {
             var users = await Task.FromResult(_IUser.GetUserDetails(id));
