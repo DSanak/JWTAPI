@@ -2,6 +2,7 @@
 <html lang="pl">
 <head id="head1">
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="login.css"  />
 
     <script type="text/javascript">
 
@@ -28,25 +29,27 @@
                 .then(response => {
                     if (response.ok) {
                         console.log(response.status);
-                        // window.location.replace("https://localhost:7259/api/user/homepage")
+                        window.location.replace("https://localhost:7259/api/user/homepage")
                         return response.text()
                     }
                 })
                 .then(data => {
                     savetoken = data;
                     console.log(savetoken);
-                    sessionStorage.setItem("tokenik", savetoken);
+                    sessionStorage.setItem("tokenik", savetoken); //zapisanie tokenu do pamięci sesji
                 })
                 .catch(error => console.log('error', error));
 
         }
 
         function showToken() {
-            console.log("dupa");
+            console.log(savetoken);
         }
 
         function redirect() {
-            window.location.replace("https://localhost:7259/api/user/homepage")
+            if (savetoken = sessionStorage.getItem("tokenik")) {
+                window.location.replace("https://localhost:7259/api/user/homepage")
+            }else alert("Najpierw się zaloguj")
         }
 
     </script>
@@ -58,13 +61,11 @@
 
 
 
-    <h1>Hello, pls zaloguj się</h1>
+    <h1 id="title1">Hello, pls zaloguj się</h1>
 
     <input type="text" id="login" />
     <input type="password" id="password" />
-    <input type="submit" value="Zaloguj" onclick="logIn()" />
-    <input type="submit" value="Token" onclick="token()" />
-    <input type="submit" value="Show Token" onclick="showToken()" />
+    <input type="submit" value="Zaloguj" onclick="token()" />
     <input type="submit" value="redirect" onclick="redirect()" />
 
     <div id="wynik"></div>

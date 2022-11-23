@@ -47,35 +47,33 @@ namespace JWTAPI.Controllers
                 var a = "<h1>Brak takiej strony</h1>";
                 return base.Content(a, "html/txt");
             }
-            
-            
 
-                _IUser.AddLogs(t);
-            
-                return await Task.FromResult(_IUser.GetUserDetails());
-            
+
+
+            _IUser.AddLogs(t);
+
+            return await Task.FromResult(_IUser.GetUserDetails());
+
         }
-        [Route("page")]
+        [Route("login")]
         [HttpGet]
         public ActionResult Strona()
         {
-            var fileContent = System.IO.File.ReadAllText("Pages/index.html");
+            var fileContent = System.IO.File.ReadAllText("Pages/login.html");
             return base.Content(fileContent, "text/html");
 
-           
+
         }
 
-        [Route("page/skrypt.js")]
+        [Route("login.css")]
         [HttpGet]
         public ActionResult skrypt()
         {
-            var fileContent = System.IO.File.ReadAllText("Pages/skrypt.js");
-            return base.Content(fileContent, "text/javascript");
+            var fileContent = System.IO.File.ReadAllText("Pages/login.css");
+            return base.Content(fileContent, "text/css");
 
 
         }
-
-
 
         [Route("homepage")]
         [HttpGet]
@@ -86,9 +84,6 @@ namespace JWTAPI.Controllers
 
 
         }
-
-
-
 
         // GET api/user/5
         [HttpGet("{id}")]
@@ -104,7 +99,7 @@ namespace JWTAPI.Controllers
             var t = new Logs
             {
 
-                userID = Singleton.Instance.saveIdusera, 
+                userID = Singleton.Instance.saveIdusera,
                 Descryption = "Blabla",
                 Timestamp = data
             };
