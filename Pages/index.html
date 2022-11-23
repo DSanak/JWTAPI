@@ -1,20 +1,20 @@
 ﻿<!DOCTYPE html>
 <html lang="pl">
-<head id="head1" runat="server">
+<head id="head1">
     <meta charset="utf-8" />
 
     <script type="text/javascript">
 
-        var savetoken;
+        let savetoken;
         async function token() {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
                 //"email": document.getElementById("login").value,
-                //"password": document.getElementById("password").value   
+                //"password": document.getElementById("password").value
                 "email": "test@abc.com",
-                "password":"$test@2022"
+                "password": "$test@2022"
             });
 
             var requestOptions = {
@@ -27,46 +27,36 @@
             fetch("https://localhost:7259/api/token", requestOptions)
                 .then(response => {
                     if (response.ok) {
-                        window.location.replace("https://localhost:7259/api/user/homepage")
+                        console.log(response.status);
+                        // window.location.replace("https://localhost:7259/api/user/homepage")
                         return response.text()
                     }
                 })
                 .then(data => {
                     savetoken = data;
+                    console.log(savetoken);
+                    sessionStorage.setItem("tokenik", savetoken);
                 })
                 .catch(error => console.log('error', error));
 
+        }
 
-            //ogarnąc jak pobrać response.status i zrobić if z redirect na inną stronę
-
-            /*
-               const res = await fetch("https://localhost:7259/api/token", requestOptions)
-                   .catch(error => console.log('error',error));
-
-               const tokenREL = await res.json();
-
-               console.log(res.status, tokenREL);
-
-
-.then(function (response) {
-                     console.log(response.status); // Will show you the status
-                     if (!response.ok) {
-                         throw new Error("HTTP status " + response.status);
-                     }
-                     return response.json();
-               */
+        function showToken() {
+            console.log("dupa");
         }
 
         function redirect() {
             window.location.replace("https://localhost:7259/api/user/homepage")
         }
 
-
-
     </script>
+
 
 </head>
 <body>
+
+
+
 
     <h1>Hello, pls zaloguj się</h1>
 
@@ -78,6 +68,10 @@
     <input type="submit" value="redirect" onclick="redirect()" />
 
     <div id="wynik"></div>
+
+
+
+
 
 </body>
 </html>

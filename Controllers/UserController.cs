@@ -13,6 +13,8 @@ using System.Net;
 using System.Net.Http.Formatting;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography.Xml;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace JWTAPI.Controllers
 {
@@ -63,6 +65,18 @@ namespace JWTAPI.Controllers
            
         }
 
+        [Route("page/skrypt.js")]
+        [HttpGet]
+        public ActionResult skrypt()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/skrypt.js");
+            return base.Content(fileContent, "text/javascript");
+
+
+        }
+
+
+
         [Route("homepage")]
         [HttpGet]
         public ActionResult HomePage()
@@ -72,6 +86,7 @@ namespace JWTAPI.Controllers
 
 
         }
+
 
 
 

@@ -5,27 +5,15 @@
 
     <script type="text/javascript">
 
+        const savetoken1 = sessionStorage.getItem("tokenik"); 
+
         async function adminPage() {
             alert("Przekierowanie do panelu admina")
 
-            //ogarnąc jak pobrać response.status i zrobić if z redirect na inną stronę
+        }
 
-            /*
-               const res = await fetch("https://localhost:7259/api/token", requestOptions)
-                   .catch(error => console.log('error',error));
-
-               const tokenREL = await res.json();
-
-               console.log(res.status, tokenREL);
-
-
-.then(function (response) {
-                     console.log(response.status); // Will show you the status
-                     if (!response.ok) {
-                         throw new Error("HTTP status " + response.status);
-                     }
-                     return response.json();
-               */
+         function pokatoken() {
+            console.log(savetoken1);
         }
 
 
@@ -38,7 +26,8 @@
     <h1>Strona główna</h1>
 
     <h2> Jakis panel admina CLICK</h2>
-    <input type="submit" id="adminPage" onclick="adminPage()" />
+    <input type="submit" id="adminPage" value="Przekierowanie dalej" onclick="adminPage()" />
+    <input type="submit" id="pokazToken" value="Poka tokena" onclick="pokatoken()" />
  
 
     <div id="wynik"></div>
