@@ -38,17 +38,9 @@ namespace JWTAPI.Controllers
             var t = new Logs
             {
                 userID = Singleton.Instance.saveIdusera,
-                Descryption = $"Wyswietlenie usera",
+                Descryption = $"Wyswietlenie userow",
                 Timestamp = data
             };
-            string pathToHtmlFile = $"{Environment.CurrentDirectory}\\Pages\\index.html";
-            if (!System.IO.File.Exists(pathToHtmlFile))
-            {
-                var a = "<h1>Brak takiej strony</h1>";
-                return base.Content(a, "html/txt");
-            }
-
-
 
             _IUser.AddLogs(t);
 
@@ -93,12 +85,12 @@ namespace JWTAPI.Controllers
 
 
         }
-        [Route("uzytkownik")]
+        [Route("user")]
         [HttpGet]
-        public ActionResult uzytkownik()
+        public ActionResult Uzytkownik()
         {
-            var fileContent = System.IO.File.ReadAllText("Pages/styleuzytkownik.html");
-            return base.Content(fileContent, "text/css");
+            var fileContent = System.IO.File.ReadAllText("Pages/user.html");
+            return base.Content(fileContent, "text/html");
 
 
         }

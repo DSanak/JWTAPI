@@ -2,20 +2,20 @@
 <html lang="pl">
 <head id="head1" runat="server">
     <meta charset="utf-8" />
-	<link rel="stylesheet" href="stylelogowanie.css" "type=text/css" />
+	<link rel="stylesheet" href="stylelogowanie.css" type="text/css" />
 
     <script type="text/javascript">
 
-        var savetoken;
+
         async function logIn() {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
-                //"email": document.getElementById("login").value,
-                //"password": document.getElementById("password").value   
-                "email": "test@abc.pl",
-                "password":"test1234"
+                "email": document.getElementById("login").value,
+                "password": document.getElementById("password").value   
+               // "email": "test@abc.pl",
+                //"password":"test1234"
             });
 
             var requestOptions = {
@@ -28,35 +28,48 @@
             fetch("https://localhost:7259/api/token", requestOptions)
                 .then(response => {
                     if (response.ok) {
-                        window.location.replace("https://localhost:7259/api/user/admin.html")
+                        window.location.replace("https://localhost:7259/api/user/admin")
+                        sessionStorage.setItem("email", document.getElementById("login").value);
                         return response.text()
-                    }
+
+                    } else if (((document.getElementById("password").value) = wynik) &&
+                        (document.getElementById("login").value = "tester@abc.pl")) {
+                        window.location.replace("http://localhost:7259/api/user/user");
+
+                    }else alert("Podane niepoprawne dane")
                 })
                 .then(data => {
-                    savetoken = data;
+                    sessionStorage.setItem("tokenik",data)
                 })
                 .catch(error => console.log('error', error));
 
-
-            //ogarnąc jak pobrać response.status i zrobić if z redirect na inną stronę
-
-            /*
-               const res = await fetch("https://localhost:7259/api/token", requestOptions)
-                   .catch(error => console.log('error',error));
-
-               const tokenREL = await res.json();
-
-               console.log(res.status, tokenREL);
-
-
-.then(function (response) {
-                     console.log(response.status); // Will show you the status
-                     if (!response.ok) {
-                         throw new Error("HTTP status " + response.status);
-                     }
-                     return response.json();
-               */
         }
+
+        let wynik;
+        async function getRandom() {
+            sessionStorage.setItem("email", document.getElementById("login").value);
+
+            const random = Math.floor(Math.random() * 50);
+            const email = sessionStorage.getItem("email");
+
+            document.getElementById("randomNumber").innerHTML = random;
+            document.getElementById("emailLenght").innerHTML = email;
+
+
+
+             wynik = (email.length * Math.sin(random));
+            console.log(wynik.toPrecision(2));
+
+
+        }
+        
+        function oneTimePass() {
+
+            document.getElementById("totpPass").value = wynik.toPrecision(2);
+
+        }
+
+
 
         function redirect() {
             window.location.replace("https://localhost:7259/api/user/homepage")
@@ -76,16 +89,20 @@
     <b>Hasło</b> <input type="password" id="password" />
 	<br>
 	<br>
-	<b>Jednorazowe hasło</b> <input type="text" id="password" value ="a*sin(x)"/>
+	<b>Jednorazowe hasło</b> <input type="text" id="totpPass"/>
 	<br>
 	<br>
     <input type="submit" value="Zaloguj" onclick="logIn()" />
-    <input type="submit" value="redirect" onclick="redirect()" />
+    <input type="submit" value="Generuj liczbę" onclick="getRandom()" />
+    <input type="submit" value="Jednorazowe" onclick="oneTimePass()" />
 	<div style="margin:auto;color:black;">
 	<br>
-	x=65
+    <div>
+        Wygenerowana liczba to: <label id="randomNumber">3</label><br />
+        A = <label id="emailLenght"></label>
+    </div>
 	<br>
-	a=6
+	
 	</div>
     <div id="wynik"></div>
 </div>

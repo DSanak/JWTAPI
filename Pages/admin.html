@@ -5,10 +5,11 @@
 
     <script type="text/javascript">
 
+        const savetoken = sessionStorage.getItem("tokenik");
+        const email = sessionStorage.getItem("email");
         async function adminPage() {
             alert("Przekierowanie do panelu admina")}
-		async function oneTimePass() {
-            alert("Przekierowanie do panelu admina")}
+        
 
     </script>
 
@@ -19,10 +20,11 @@
 	<label for="aktywnosc"><input type="checkbox"> Zapisuj aktywności</label><br><br>
 	<label for="proba"> Maksymalna liczba prób wpisania hasła</label><br><br>
     <input type="submit" id="adminPage" onclick="adminPage()" />
-	<input type="submit" id="pass" onclick="oneTimePass()"value ="Hasło jednorazowe"/>
+
 	<input type="submit" id="log" onclick="showLog()"value ="Pokaz logi"/>
+
     <div id="wynik"></div><br>
-	<b>Hasło</b> <input type="text" id="onetimepass" />
+
 
 </body>
 </html>
