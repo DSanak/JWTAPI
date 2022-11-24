@@ -5,24 +5,102 @@
 
     <script type="text/javascript">
 
+
+
+        const savetoken = sessionStorage.getItem("tokenik");
+        const email = sessionStorage.getItem("email");
+
+        let users = ["firstName"];
+
         async function adminPage() {
-            alert("Przekierowanie do panelu admina")}
-		async function oneTimePass() {
-            alert("Przekierowanie do panelu admina")}
+            alert("Przekierowanie do panelu admina")
+        }
+
+        async function showUsers() {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer" + savetoken);
+
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            /*
+                        fetch("https://localhost:7259/api/user", requestOptions)
+                            .then(response => {
+                                return response.text();
+                            })
+                            .then(result => document.getElementById("wynikUsers").innerHTML = result) //do przerobienia
+                            .catch(error => console.log('error', error));
+                    }
+                    */
+
+            fetch("https://localhost:7259/api/user")
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    data.forEach(user => {
+                        const markup = `<li>
+                            ${user.userName}
+                            ${user.email}
+                            ${user.lastLogin}
+
+                             </li>`;
+
+                        document.querySelector('ul.users').insertAdjacentHTML('beforeend', markup);
+                    });
+                });
+        }
+
+        function showLogs() {
+
+            fetch("https://localhost:7259/api/logs")
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    data.forEach(logs => {
+                        const markup = `<li>
+                           userID:  ${logs.userID}
+                           timestamp: ${logs.timestamp}
+                           descryption: ${logs.descryption}
+
+                             </li>`;
+
+                        document.querySelector('ul.logTable').insertAdjacentHTML('beforeend', markup);
+                    });
+                });
+
+        }
 
     </script>
 
 </head>
 <body>
     <h2>Panel administratora</h2>
-	<label for="lista"><input type="checkbox">Pokaz listę użytkowników przy logowaniu</label><br><br>
-	<label for="aktywnosc"><input type="checkbox"> Zapisuj aktywności</label><br><br>
-	<label for="proba"> Maksymalna liczba prób wpisania hasła</label><br><br>
+    <label for="lista"><input type="checkbox">Pokaz listę użytkowników przy logowaniu</label><br><br>
+    <label for="aktywnosc"><input type="checkbox"> Zapisuj aktywności</label><br><br>
+
+    <label for="proba"> Maksymalna liczba prób wpisania hasła</label><br><br>
     <input type="submit" id="adminPage" onclick="adminPage()" />
-	<input type="submit" id="pass" onclick="oneTimePass()"value ="Hasło jednorazowe"/>
-	<input type="submit" id="log" onclick="showLog()"value ="Pokaz logi"/>
-    <div id="wynik"></div><br>
-	<b>Hasło</b> <input type="text" id="onetimepass" />
+
+    <input type="submit" id="log" onclick="showLogs()" value="Pokaz logi" />
+    <input type="submit" id="log" onclick="showUsers()" value="Pokaz użytkowników" />
+
+    <div id="wynikLogs">
+        <h1>Logs:</h1>
+        <ul class="logTable"></ul>
+        
+        </div><br>
+    <div>
+        <h1>Users:</h1>
+        <ul class="users"></ul>
+
+    </div><br>
+
+
+
 
 </body>
 </html>
