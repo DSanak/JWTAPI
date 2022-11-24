@@ -1,0 +1,30 @@
+body {
+  background-color: white;
+  
+}
+
+h1 {
+  color: black;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+}
+#srodek
+{
+	height: 350px;
+	width: 350px;
+	border: 1px solid blue;
+	display: block;
+	margin: auto;
+	text-align: center;
+	color:blue;
+	border-radius: 4px;
+	background-image: linear-gradient(180deg, lightblue, white 80%, white);
+}
+select {
+  width: 20%;
+  padding:10px;
+  border-radius:10px;
+}

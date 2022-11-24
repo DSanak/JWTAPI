@@ -55,36 +55,62 @@ namespace JWTAPI.Controllers
             return await Task.FromResult(_IUser.GetUserDetails());
 
         }
-        [Route("login")]
+        [Route("logowanie")]
         [HttpGet]
         public ActionResult Strona()
         {
-            var fileContent = System.IO.File.ReadAllText("Pages/login.html");
+            var fileContent = System.IO.File.ReadAllText("Pages/logowanie.html");
             return base.Content(fileContent, "text/html");
 
 
         }
 
-        [Route("login.css")]
+        [Route("stylelogowanie.css")]
         [HttpGet]
-        public ActionResult skrypt()
+        public ActionResult logowaniecss()
         {
-            var fileContent = System.IO.File.ReadAllText("Pages/login.css");
+            var fileContent = System.IO.File.ReadAllText("Pages/stylelogowanie.css");
             return base.Content(fileContent, "text/css");
 
 
         }
 
-        [Route("homepage")]
+        [Route("admin")]
         [HttpGet]
-        public ActionResult HomePage()
+        public ActionResult admin()
         {
-            var fileContent = System.IO.File.ReadAllText("Pages/home.html");
+            var fileContent = System.IO.File.ReadAllText("Pages/admin.html");
             return base.Content(fileContent, "text/html");
 
 
         }
+        [Route("styleadmin.css")]
+        [HttpGet]
+        public ActionResult admincss()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/styleadmin.css");
+            return base.Content(fileContent, "text/css");
 
+
+        }
+        [Route("uzytkownik")]
+        [HttpGet]
+        public ActionResult uzytkownik()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/styleuzytkownik.html");
+            return base.Content(fileContent, "text/css");
+
+
+        }
+        [Route("styleuzytkownik.css")]
+        [HttpGet]
+        public ActionResult uzytkownikcss()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/styleuzytkownik.css");
+            return base.Content(fileContent, "text/css");
+
+
+        }
         // GET api/user/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserInfo>> Get(int id)

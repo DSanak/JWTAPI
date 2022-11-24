@@ -13,7 +13,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7259;http://localhost:5259",
-      "launchUrl": "https://localhost:7259/api/user/login",
+      "launchUrl": "https://localhost:7259/api/user/logowanie",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
