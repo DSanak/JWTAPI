@@ -30,6 +30,7 @@ namespace JWTAPI.Controllers
             _IUser = IUser;
         }
 
+
         // GET: api/user>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
@@ -47,6 +48,9 @@ namespace JWTAPI.Controllers
             return await Task.FromResult(_IUser.GetUserDetails());
 
         }
+
+
+
         [Route("logowanie")]
         [HttpGet]
         public ActionResult Strona()
