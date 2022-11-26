@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JWTAPI.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/employee")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -79,6 +79,19 @@ namespace JWTAPI.Controllers
             var employee = _IEmployee.DeleteEmployee(id);
             return await Task.FromResult(employee);
         }
+
+
+        [Route("logowanie")]
+        [HttpGet]
+        public ActionResult Strona()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/userLogin.html");
+            return base.Content(fileContent, "text/html");
+
+
+        }
+
+
 
         private bool EmployeeExists(int id)
         {

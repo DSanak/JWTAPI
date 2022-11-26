@@ -46,18 +46,9 @@ namespace JWTAPI.Models
             {
                 entity.ToTable("Employee");
                 entity.Property(e => e.EmployeeID).HasColumnName("EmployeeID");
-                entity.Property(e => e.NationalIDNumber).HasMaxLength(15).IsUnicode(false);
                 entity.Property(e => e.EmployeeName).HasMaxLength(100).IsUnicode(false);
                 entity.Property(e => e.LoginID).HasMaxLength(256).IsUnicode(false);
-                entity.Property(e => e.JobTitle).HasMaxLength(50).IsUnicode(false);
-                entity.Property(e => e.BirthDate).IsUnicode(false);
-                entity.Property(e => e.MaritalStatus).HasMaxLength(1).IsUnicode(false);
-                entity.Property(e => e.Gender).HasMaxLength(1).IsUnicode(false);
-                entity.Property(e => e.HireDate).IsUnicode(false);
-                entity.Property(e => e.VacationHours).IsUnicode(false);
-                entity.Property(e => e.SickLeaveHours).IsUnicode(false);
-                entity.Property(e => e.RowGuid).HasMaxLength(50).IsUnicode(false);
-                entity.Property(e => e.ModifiedDate).IsUnicode(false);
+                entity.Property(e => e.Password).HasMaxLength(256).IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

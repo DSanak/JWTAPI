@@ -9,12 +9,34 @@
 
         const savetoken = sessionStorage.getItem("tokenik");
         const email = sessionStorage.getItem("email");
+        let employeID;
+        let usersData;
+        let employeeData;
 
-        let users = ["firstName"];
 
-        async function adminPage() {
-            alert("Przekierowanie do panelu admina")
+        function showEmployeeData() {
+
+            employeID = document.getElementById("employeeid").value;
+
+            fetch("https://localhost:7259/api/employee/" + employeID)
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    employeeData = data;
+                    const markup = `<li>
+                            EmployeeID: ${data.employeeID}
+                            Display name: ${data.employeeName}
+                            Login: ${data.loginID}
+                            TOTPPassword: ${data.password}
+
+                                 </li>`;
+                    document.querySelector('ul.employeedata').innerHTML = "";
+                    document.querySelector("ul.employeedata").insertAdjacentHTML('beforeend', markup)
+                });
         }
+
+
 
         async function showUsers() {
             var myHeaders = new Headers();
@@ -35,19 +57,26 @@
                     }
                     */
 
-            fetch("https://localhost:7259/api/user")
+
+
+            fetch("https://localhost:7259/api/user/")
                 .then(res => {
                     return res.json();
                 })
                 .then(data => {
+                    usersData = data.find(user => user.userId == document.getElementById("userId").value);
+                    console.log(usersData);
+                    document.querySelector('ul.users').innerHTML = "";
                     data.forEach(user => {
                         const markup = `<li>
-                            ${user.userName}
-                            ${user.email}
-                            ${user.lastLogin}
+                               UserId: ${user.userId}
+                               Display name: ${user.displayName}
+                               Name: ${user.userName}
+                               Email: ${user.email}
+                               Last login ${user.lastLogin}
+                               Createddata ${user.lastLogin}
 
-                             </li>`;
-
+                                 </li>`;
                         document.querySelector('ul.users').insertAdjacentHTML('beforeend', markup);
                     });
                 });
@@ -62,11 +91,11 @@
                 .then(data => {
                     data.forEach(logs => {
                         const markup = `<li>
-                           userID:  ${logs.userID}
-                           timestamp: ${logs.timestamp}
-                           descryption: ${logs.descryption}
+                               userID:  ${logs.userID}
+                               timestamp: ${logs.timestamp}
+                               descryption: ${logs.descryption}
 
-                             </li>`;
+                                 </li>`;
 
                         document.querySelector('ul.logTable').insertAdjacentHTML('beforeend', markup);
                     });
@@ -74,30 +103,181 @@
 
         }
 
+        function showEmployee() {
+
+
+            fetch("https://localhost:7259/api/employee")
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('ul.employee').innerHTML = "";
+                    data.forEach(employee => {
+                        const markup = `<li>
+                            EmployeeID: ${employee.employeeID}
+                            Display name: ${employee.employeeName}
+                            Login: ${employee.loginID}
+                            TOTPPassword: ${employee.password}
+                                 </li>`;
+                        document.querySelector('ul.employee').insertAdjacentHTML('beforeend', markup);
+                    })
+                })
+        }
+
+
+        function AddEmployee() {
+            //toDO
+        }
+
+        function UpdateEmployee() {
+
+            //sprawdzenie czy user istnieje
+
+
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+
+            fetch("https://localhost:7259/api/employee/" + document.getElementById('employeeid').value, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                            .then(data => {
+
+                                let userid = document.getElementById("employeeid").value;
+                                let random = Math.floor(Math.random() * 50);
+
+                                let wynik = (employeeData.loginID.length * Math.sin(random)).toPrecision(2)
+
+                                
+
+
+                                var myHeaders = new Headers();
+                                myHeaders.append("Content-Type", "application/json");
+
+                                var raw = JSON.stringify({
+                                    "employeeID": data.employeeID,
+                                    "employeeName": data.employeeName,
+                                    "loginID": data.loginID,
+                                    "password": `${wynik}`
+                                });
+
+                                var requestOptions = {
+                                    method: 'PUT',
+                                    headers: myHeaders,
+                                    body: raw,
+                                    redirect: 'follow'
+                                };
+
+                                fetch("https://localhost:7259/api/employee/4", requestOptions)
+                                    .then(response => response.text())
+                                    .then(result => console.log(result))
+                                    .catch(error => console.log('error', error));
+                            });
+                    } else alert("Brak usera");
+                })
+                .catch(error => console.log('error', error));
+
+
+
+
+            //update
+
+        }
+
+
+        function getRandom() {
+
+
+        }
+
+        function totpPass() {
+
+            const userid = document.getElementById("userId").value;
+            const random = Math.floor(Math.random() * 50);
+
+            console.log(usersData.email);
+            let wynik = (usersData.email.length * Math.sin(random));
+
+            console.log("Wynik funkcji strzałkowej = " + wynik);
+
+
+
+            if (usersData.find(users => users.userId == userid)) {
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
+                var raw = JSON.stringify({
+                    "userId": usersData.userId,
+                    "displayName": usersData.displayName,
+                    "userName": usersData.userName,
+                    "email": usersData.email,
+                    "password": wynik,
+                    "createdDate": usersData.createdDate,
+                    "lastLogin": null
+                });
+
+                var requestOptions = {
+                    method: 'PUT',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+
+                fetch(`https://localhost:7259/api/user/${userid}`, requestOptions)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+            }
+
+            console.log(usersData.find(user => user.userId == 1002));
+
+        }
+
+        
+
+
+
     </script>
 
 </head>
 <body>
     <h2>Panel administratora</h2>
-    <label for="lista"><input type="checkbox">Pokaz listę użytkowników przy logowaniu</label><br><br>
-    <label for="aktywnosc"><input type="checkbox"> Zapisuj aktywności</label><br><br>
 
     <label for="proba"> Maksymalna liczba prób wpisania hasła</label><br><br>
-    <input type="submit" id="adminPage" onclick="adminPage()" />
+    <input type="submit" onclick="showEmployeeData()" value="Pokaz pracownika" />
 
+
+    <br>
+    <label for="jednorazowe"><b>Jednorazowe hasło</b></label><br />
+    <label> Podaj id pracownika</label><input type="text" id="employeeid" /> <br /><br />
+    <div>
+        <ul class="employeedata"></ul>
+    </div>
+    <input type="submit" value="Ustaw jednorazowe hasło" onclick="UpdateEmployee()" /><br />
+    <br>
+
+
+    <input type="submit" onclick="getRandom()" value="Random generator" />
     <input type="submit" id="log" onclick="showLogs()" value="Pokaz logi" />
-    <input type="submit" id="log" onclick="showUsers()" value="Pokaz użytkowników" />
+    <input type="submit" onclick="showUsers()" value="Pokaz użytkowników" />
+    <input type="submit" onclick="showEmployee()" value="Pokaz pracownikow" />
 
     <div id="wynikLogs">
         <h1>Logs:</h1>
         <ul class="logTable"></ul>
-        
-        </div><br>
+
+    </div><br>
     <div>
         <h1>Users:</h1>
         <ul class="users"></ul>
 
     </div><br>
+
+    <div>
+        <br />
+        <h1>Employee</h1>
+        <ul class="employee"></ul>
+    </div>
 
 
 

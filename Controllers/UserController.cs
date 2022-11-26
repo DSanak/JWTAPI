@@ -96,7 +96,6 @@ namespace JWTAPI.Controllers
             var fileContent = System.IO.File.ReadAllText("Pages/user.html");
             return base.Content(fileContent, "text/html");
 
-
         }
         [Route("styleuzytkownik.css")]
         [HttpGet]
@@ -140,7 +139,7 @@ namespace JWTAPI.Controllers
 
         // PUT api/user/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserInfo>> Put(int id, UserInfo users)
+        public async Task<ActionResult<UserInfo>> Post(int id, UserInfo users)
         {
             if (id != users.UserId)
             {
@@ -171,6 +170,35 @@ namespace JWTAPI.Controllers
             var users = _IUser.DeleteUser(id);
             return await Task.FromResult(users);
         }
+
+
+        // PUT api/employee/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UserInfo>> Put(int id, UserInfo user)
+        {
+            if (id != user.UserId)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _IUser.UpdateUser(user);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return await Task.FromResult(user);
+        }
+
+
 
         private bool EmployeeExists(int id)
         {

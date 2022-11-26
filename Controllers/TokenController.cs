@@ -17,12 +17,14 @@ namespace JWTAPI.Controllers
         public IConfiguration _configuration;
         private readonly DatabaseContext _context;
         private readonly IUser _IUser;
+        private readonly IEmployees _IEmployees;
 
-        public TokenController(IConfiguration config, DatabaseContext context, IUser user)
+        public TokenController(IConfiguration config, DatabaseContext context, IUser user, IEmployees employee)
         {
             _configuration = config;
             _context = context;
             _IUser = user;
+            _IEmployees = employee;
         }
 
         [HttpPost]
@@ -84,9 +86,32 @@ namespace JWTAPI.Controllers
             }
         }
 
-        private async Task<UserInfo> GetUser(string email, string password)
+        [Route("employee")]
+        [HttpPost]
+        public async Task<IActionResult> PostEmployee(Employee _employeeData)
+        {
+
+            if (_employeeData != null && _employeeData.LoginID != null && _employeeData.Password != null)
+            {
+                var employee = await GetEmployee(_employeeData.LoginID, _employeeData.Password);
+                if (employee != null)
+                {
+                    return Ok();
+
+                }else return BadRequest("Invalid credentials");
+
+            }
+            else return BadRequest();
+        }
+
+
+                private async Task<UserInfo> GetUser(string email, string password)
         {
             return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+        }
+        private async Task<Employee> GetEmployee(string login, string password)
+        {
+            return await _context.Employees.FirstOrDefaultAsync(e => e.LoginID == login && e.Password == password);
         }
 
 
