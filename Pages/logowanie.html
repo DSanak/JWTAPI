@@ -32,11 +32,7 @@
                         sessionStorage.setItem("email", document.getElementById("login").value);
                         return response.text()
 
-                    } else if (((document.getElementById("password").value) = wynik) &&
-                        (document.getElementById("login").value = "tester@abc.pl")) {
-                        window.location.replace("http://localhost:7259/api/user/user");
-
-                    }else alert("Podane niepoprawne dane")
+                    } 
                 })
                 .then(data => {
                     sessionStorage.setItem("tokenik",data)
@@ -57,7 +53,8 @@
 
 
 
-             wynik = (email.length * Math.sin(random));
+            wynik = (email.length * Math.sin(random));
+            document.getElementById("totpPass").value = wynik.toPrecision(2);
             console.log(wynik.toPrecision(2));
 
 
@@ -65,7 +62,9 @@
         
         function oneTimePass() {
 
-            document.getElementById("totpPass").value = wynik.toPrecision(2);
+            if (document.getElementById("password").value == wynik.toPrecision(2)) {
+                window.location.replace("https://localhost:7259/api/user/user");
+            } else alert("Podano niepoprawne haslo");
 
         }
 

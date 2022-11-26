@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head id="head1" runat="server">
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="stylelogowanie.css" type="text/css" />
+
+    <script type="text/javascript">
+
+        function logIn() {
+            const login = document.getElementById("login").value
+            const password = document.getElementById("password").value
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "loginID": login,
+                "password": password
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("https://localhost:7259/api/token/employee", requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        window.location.replace("https://localhost:7259/api/user/logowanie")
+                    }
+                })
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+
+    <div id="srodek">
+        <h1>Logowanie do aplikacji</h1>
+
+        <b>Login</b> <input type="text" id="login" />
+        <br>
+        <br>
+        <b>Hasło</b> <input type="password" id="password" />
+        <input type="submit" value="Zaloguj" onclick="logIn()" />
+        </div>
+
+
+</body>
+</html>
