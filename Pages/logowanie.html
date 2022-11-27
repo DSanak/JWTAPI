@@ -13,8 +13,8 @@
 
             var raw = JSON.stringify({
                 "email": document.getElementById("login").value,
-                "password": document.getElementById("password").value   
-               // "email": "test@abc.pl",
+                "password": document.getElementById("password").value
+                // "email": "test@abc.pl",
                 //"password":"test1234"
             });
 
@@ -28,17 +28,16 @@
             fetch("https://localhost:7259/api/token", requestOptions)
                 .then(response => {
                     if (response.ok) {
-                        window.location.replace("https://localhost:7259/api/user/admin")
-                        sessionStorage.setItem("email", document.getElementById("login").value);
+                        localStorage.setItem("email", document.getElementById("login").value);
                         return response.text()
-
-                    } 
+                            .then(data => {
+                                document.cookie = `access_token=${data}`
+                                localStorage.setItem("tokenik", data);
+                                console.log(document.cookie);
+                                window.location.href = "https://localhost:7259/api/user/admin"
+                            })
+                    }
                 })
-                .then(data => {
-                    sessionStorage.setItem("tokenik",data)
-                })
-                .catch(error => console.log('error', error));
-
         }
 
         let wynik;
