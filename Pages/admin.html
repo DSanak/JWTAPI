@@ -7,8 +7,11 @@
 
 
 
-        const savetoken = sessionStorage.getItem("tokenik");
-        const email = sessionStorage.getItem("email");
+        const token = (document.cookie.split('=')[1]).replace(/(\r\n|\n|\r)/gm, "")
+        const tokenRel = `Bearer ${token}`
+
+        
+        const email = localStorage.getItem("email");
         let employeID;
         let usersData;
         let employeeData;
@@ -39,32 +42,22 @@
 
 
         async function showUsers() {
+            
             var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer" + savetoken);
-
+            myHeaders.append("Authorization", "Bearer " + token);
             var requestOptions = {
                 method: 'GET',
                 headers: myHeaders,
                 redirect: 'follow'
             };
-            /*
-                        fetch("https://localhost:7259/api/user", requestOptions)
-                            .then(response => {
-                                return response.text();
-                            })
-                            .then(result => document.getElementById("wynikUsers").innerHTML = result) //do przerobienia
-                            .catch(error => console.log('error', error));
-                    }
-                    */
+            console.log(requestOptions)
 
-
-
-            fetch("https://localhost:7259/api/user/")
+            fetch("https://localhost:7259/api/user/", requestOptions)
                 .then(res => {
                     return res.json();
                 })
                 .then(data => {
-                    usersData = data.find(user => user.userId == document.getElementById("userId").value);
+                //    usersData = data.find(user => user.userId == document.getElementById("userId").value);
                     console.log(usersData);
                     document.querySelector('ul.users').innerHTML = "";
                     data.forEach(user => {
@@ -186,6 +179,8 @@
 
 
         function getRandom() {
+
+ 
 
 
         }

@@ -18,7 +18,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace JWTAPI.Controllers
 {
-    //[Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -30,7 +29,7 @@ namespace JWTAPI.Controllers
             _IUser = IUser;
         }
 
-
+        [Authorize]
         // GET: api/user>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
@@ -80,6 +79,7 @@ namespace JWTAPI.Controllers
 
 
         }
+
         [Route("styleadmin.css")]
         [HttpGet]
         public ActionResult admincss()
@@ -89,6 +89,7 @@ namespace JWTAPI.Controllers
 
 
         }
+
         [Route("user")]
         [HttpGet]
         public ActionResult Uzytkownik()
@@ -106,6 +107,7 @@ namespace JWTAPI.Controllers
 
 
         }
+        [Authorize]
         // GET api/user/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserInfo>> Get(int id)
@@ -129,6 +131,8 @@ namespace JWTAPI.Controllers
             return users;
 
         }
+
+        [Authorize]
         // POST api/user
         [HttpPost]
         public async Task<ActionResult<UserInfo>> Post(UserInfo users)
@@ -137,6 +141,7 @@ namespace JWTAPI.Controllers
             return await Task.FromResult(users);
         }
 
+        [Authorize]
         // PUT api/user/5
         [HttpPut("{id}")]
         public async Task<ActionResult<UserInfo>> Post(int id, UserInfo users)
@@ -163,6 +168,7 @@ namespace JWTAPI.Controllers
             return await Task.FromResult(users);
         }
 
+        [Authorize]
         // DELETE api/user/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<UserInfo>> Delete(int id)
@@ -171,7 +177,7 @@ namespace JWTAPI.Controllers
             return await Task.FromResult(users);
         }
 
-
+        [Authorize]
         // PUT api/employee/5
         [HttpPut("{id}")]
         public async Task<ActionResult<UserInfo>> Put(int id, UserInfo user)

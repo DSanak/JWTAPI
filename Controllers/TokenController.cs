@@ -66,7 +66,7 @@ namespace JWTAPI.Controllers
                     var t = new Logs
                     {
                         userID = user.UserId,
-                        Descryption = "Use token by " + user.Email,
+                        Descryption = "Use token by user " + user.Email,
                         Timestamp = data
                     };
                     Singleton.Instance.saveIdusera = user.UserId;
@@ -98,6 +98,7 @@ namespace JWTAPI.Controllers
                 {
                     return Ok();
 
+                    
                 }else return BadRequest("Invalid credentials");
 
             }

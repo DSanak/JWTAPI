@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="stylelogowanie.css" type="text/css" />
 
     <script type="text/javascript">
-
+            let loginAttempts = 5;
         function logIn() {
             const login = document.getElementById("login").value
             const password = document.getElementById("password").value
@@ -27,13 +27,59 @@
 
             fetch("https://localhost:7259/api/token/employee", requestOptions)
                 .then(response => {
-                    if (response.ok) {
-                        window.location.replace("https://localhost:7259/api/user/logowanie")
+                    if (loginAttempts > 1) {
+
+                        if (response.ok) {
+                            sessionStorage.setItem("loginEmployee", document.getElementById("login").value)
+                            window.location.replace("https://localhost:7259/api/user/user")
+
+                        } else loginAttempts == loginAttempts--;
+                        console.log(loginAttempts)
+                    } else {
+                        loginAttempts = 5;
+                        document.getElementById("loginForm").style.display="none";
+                        timer();
                     }
                 })
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
 
+        }
+
+
+        function timer() {
+            // Set the date we're counting down to
+           // var countDownDate = new Date(Date.now()).getTime() + 900000;  //15 minut
+            var countDownDate = new Date(Date.now()).getTime() + 9000;
+            document.getElementById("demo").style.display = "block";
+            
+            // Update the count down every 1 second
+            var x = setInterval(function () {
+
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the element with id="demo"
+                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                    + minutes + "m " + seconds + "s ";
+
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("loginForm").style.display = "block";
+                    document.getElementById("demo").style.display = "none";
+                }
+            }, 1000);
+            
         }
 
 
@@ -46,11 +92,15 @@
     <div id="srodek">
         <h1>Logowanie do aplikacji</h1>
 
-        <b>Login</b> <input type="text" id="login" />
-        <br>
-        <br>
-        <b>Hasło</b> <input type="password" id="password" />
-        <input type="submit" value="Zaloguj" onclick="logIn()" />
+        <div id="loginForm">
+            <b>Login</b> <input type="text" id="login" />
+            <br>
+            <br>
+            <b>Hasło</b> <input type="password" id="password" />
+            <input type="submit" value="Zaloguj" onclick="logIn()" />
+            <input type="submit" value="Timer" onclick="timer()" />
+        </div>
+        <p id="demo"></p>
         </div>
 
 
