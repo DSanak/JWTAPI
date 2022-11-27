@@ -6,6 +6,7 @@
         public string? EmployeeName { get; set; }
         public string? LoginID { get; set; }
         public string? Password { get; set; }
+        public DateTime? ExpireTime { get; set; }
 
     }
 }

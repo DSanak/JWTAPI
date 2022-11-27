@@ -21,8 +21,9 @@ namespace JWTAPI.Models
         {
             modelBuilder.Entity<Logs>(entity =>
             {
-                // entity.HasNoKey();
+               
                 entity.ToTable("Logs");
+                entity.Property(e => e.LogId).HasColumnName("LogId");
                 entity.Property(e => e.userID).HasColumnName("userID");
                 entity.Property(e => e.Timestamp).IsUnicode(false);
                 entity.Property(e => e.Descryption).HasMaxLength(60).IsUnicode(false);
@@ -49,6 +50,7 @@ namespace JWTAPI.Models
                 entity.Property(e => e.EmployeeName).HasMaxLength(100).IsUnicode(false);
                 entity.Property(e => e.LoginID).HasMaxLength(256).IsUnicode(false);
                 entity.Property(e => e.Password).HasMaxLength(256).IsUnicode(false);
+                entity.Property(e => e.ExpireTime).IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

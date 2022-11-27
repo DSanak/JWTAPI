@@ -13,17 +13,32 @@ namespace JWTAPI.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployees _IEmployee;
+        private readonly IUser? _IUser;
 
-        public EmployeeController(IEmployees IEmployee)
+        public EmployeeController(IEmployees IEmployee, IUser IUser)
         {
             _IEmployee = IEmployee;
+            _IUser = IUser;
         }
 
         // GET: api/employee>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> Get()
         {
+            var data = DateTime.Now;
+            var t = new Logs
+            {
+                userID = Singleton.Instance.saveIdusera,
+                Descryption = $"Wyświetlenie pracowników",
+                Timestamp = data
+            };
+
+            _IUser.AddLogs(t);
+
             return await Task.FromResult(_IEmployee.GetEmployeeDetails());
+
+
+
         }
 
         // GET api/employee/5
@@ -35,6 +50,17 @@ namespace JWTAPI.Controllers
             {
                 return NotFound();
             }
+            var data = DateTime.Now;
+
+            var t = new Logs
+            {
+                userID = Singleton.Instance.saveIdusera,
+                Descryption = $"Wyświetlenie pracownika o id: "+id,
+                Timestamp = data
+            };
+
+            _IUser.AddLogs(t);
+
             return employees;
         }
 
@@ -43,6 +69,20 @@ namespace JWTAPI.Controllers
         public async Task<ActionResult<Employee>> Post(Employee employee)
         {
             _IEmployee.AddEmployee(employee);
+
+            var data = DateTime.Now;
+
+            var t = new Logs
+            {
+                userID = Singleton.Instance.saveIdusera,
+                Descryption = $"Dodanie pracownika o id: " + employee.EmployeeID,
+                Timestamp = data
+            };
+
+            _IUser.AddLogs(t);
+
+
+
             return await Task.FromResult(employee);
         }
 
@@ -57,6 +97,16 @@ namespace JWTAPI.Controllers
             try
             {
                 _IEmployee.UpdateEmployee(employee);
+                var data = DateTime.Now;
+
+                var t = new Logs
+                {
+                    userID = Singleton.Instance.saveIdusera,
+                    Descryption = $"Update pracownika o id: " + employee.EmployeeID,
+                    Timestamp = data
+                };
+
+                _IUser.AddLogs(t);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -77,7 +127,22 @@ namespace JWTAPI.Controllers
         public async Task<ActionResult<Employee>> Delete(int id)
         {
             var employee = _IEmployee.DeleteEmployee(id);
+
+            if (employee != null)
+            {
+                var data = DateTime.Now;
+
+                var t = new Logs
+                {
+                    userID = Singleton.Instance.saveIdusera,
+                    Descryption = $"Usunięcie pracownika o id: " + employee.EmployeeID,
+                    Timestamp = data
+                };
+
+                _IUser.AddLogs(t);
             return await Task.FromResult(employee);
+            }else return NotFound();
+
         }
 
 
