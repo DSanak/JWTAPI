@@ -5,13 +5,29 @@
 	<link rel="stylesheet" href="styleuzytkownik.css" type="text/css" />
 	<script>
 
+		const login = sessionStorage.getItem("loginEmployee");
+
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+
+        fetch("https://localhost:7259/api/employee", requestOptions)
+            .then(response => response.json())
+			.then(data => {
+
+				let emData = (data.find(e => e.loginID == login));
+				document.getElementById("login").value = emData.loginID;
+            }).catch(error => console.log('error', error));
+		//document.getElementById("login").innerHTML = login;
+
 	</script>
 </head>
 <body>
 <div id ="srodek">
     <h1>Profil użytkownika</h1>
 <form>
-	<label for="login"><b>Login</b> <input type="text" id="login" /></label>
+	<label for="login"><b>Login</b> <input type="text" id="login"/></label>
 	<br>
 	<br>
     <label for="imie"><b>Imię</b> <input type="password" id="imie" /></label>
@@ -34,7 +50,7 @@
 
 <br>
 <label for="haslo"><b>Hasło</b> <input type="password" id="haslo" value="*****"/></label><br><br>
-<center>Resetuj hasło</center>
+<input type="submit" value="Resetuj hasło" onclick="test()"/>
 </form>
 <br>
 <button type="submit">Zapisz</button>
