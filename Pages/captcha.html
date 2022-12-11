@@ -1,0 +1,45 @@
+﻿<html>
+<head>
+    <title>reCAPTCHA demo: Simple page</title>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+
+    <div class="g-recaptcha" data-sitekey="6LfWQ2wjAAAAANqptvW8yjVKArnt3sQHjXWRvtMC"></div>
+    <input type="submit" value="submit" onclick="reCaptcha()" />
+
+    <script>
+        function reCaptcha() {
+            var response = grecaptcha.getResponse();
+            if (response.length === 0) {
+                // Wartość response jest pusta, co oznacza, że użytkownik nie przeszedł testu ReCaptcha
+                alert("Proszę przejść test ReCaptcha");
+            } else {
+                var responseToken = response;
+                console.log(responseToken)
+                var requestOptions = {
+                    method: 'POST',
+                    redirect: 'follow'
+                };
+
+                var requestOptions = {
+                    method: 'POST',
+                    redirect: 'follow'
+                };
+
+                fetch("https://localhost:7259/api/captcha?responseToken=" + responseToken, requestOptions)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+                
+
+            }
+        }
+
+    </script>
+</body>
+</html>
+
+

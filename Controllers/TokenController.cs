@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
+//using System.Web.Mvc;
 
 namespace JWTAPI.Controllers
 {
@@ -106,7 +109,8 @@ namespace JWTAPI.Controllers
         }
 
 
-                private async Task<UserInfo> GetUser(string email, string password)
+
+        private async Task<UserInfo> GetUser(string email, string password)
         {
             return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }

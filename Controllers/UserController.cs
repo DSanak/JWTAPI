@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Security.Cryptography.Xml;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 
 namespace JWTAPI.Controllers
 {
@@ -107,6 +108,22 @@ namespace JWTAPI.Controllers
 
 
         }
+
+        [Route("captcha")]
+        [HttpGet]
+        public ActionResult reCaptcha()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/captcha.html");
+            return base.Content(fileContent, "text/html");
+
+        }
+
+
+     
+
+
+
+
         [Authorize]
         // GET api/user/5
         [HttpGet("{id}")]
