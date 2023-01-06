@@ -1,41 +1,112 @@
+
+* {
+	box-sizing: border-box;
+	margin: 0px;
+	padding: 0px;
+	
+}
 body {
-  background-color: white;
+	font-family: Arial;
+	font-size: 17px;
+	background: linear-gradient(to top right, blue, white);
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
 }
 
-h1 {
-  color: black;
-}
-
-p {
-  font-family: verdana;
-  font-size: 20px;
-}
-
-label{
-}
-input{
-	text-align:center;
-}
-#srodek
-{
-	height: 500px;
-	width: 400px;
-	border: 1px solid blue;
-	display: block;
-	margin: auto;
+form {
+	background: linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.35));
+	width: 300px;
+	padding: 36px 24px;
 	text-align: center;
-	color:blue;
-	border-radius: 4px;
-	background-image: linear-gradient(180deg, lightblue, white 80%, white);
+	border-radius: 20px;
+	box-shadow: 0px 8px 24px 0 rgba(0,0,0,0.3);
 }
-select {
-  width: 30%;
-  padding:5px;
-  border-radius:5px;
+.container {
+	margin-bottom: 32px;
+	position: relative;
+	
 }
+
+input,
 button {
-text-align: center;
-margin-left: 170px;
-margin-top: 35px;
-font-size: 15px;
+	background: linear-gradient(to left, rgba(255,255,255,0.1), rgba(255,255,255,0.25));
+	border:none;
+	border-radius: 18px;
+	box-shadow: 0px 8px 24px 0 rgba(0,0,0,0.3);
+	color: white;
+	font-size: 20px;
+	padding: 12px 24px;
+	transition: box-shadow 0.3s;
+}
+
+input {
+	width: 200px;	
+}
+
+label {
+	cursor: text;
+	color:white;
+	left: 80px;
+	font-style: italic;
+	opacity: 0.4;
+	position: absolute;
+	top:50%;
+	transform: translateY(-50%);
+	transition: left 0.3s, opacity 0.3s;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+	opacity: 0;
+}
+
+input:hover {
+	box-shadow: 0px 8px 12px 0 rgba(0,0,0,0.3);
+}
+input:focus {
+	outline: solid 3px rgba(255,255,255,0.8);
+}
+
+.icon{
+	margin: 0 auto 24px;
+	height:72px;
+	width: 72px;
+	border: solid 3px rgba(255,255,255,0.6);
+	border-radius: 50%;
+	overflow: hidden;
+	position: relative;
+	
+}
+
+.icon:before{
+	
+	background: rgba(255,255,255,0.6);
+	bottom: 0;
+	content: " ";
+	display: block;
+	height: 24px;
+	position: absolute;
+	width: 64px;
+	border-radius: 50%;
+}
+
+.icon:after{
+	background: rgba(255,255,255,0.6);
+	bottom: 50%;
+	content: " ";
+	display: block;
+	height: 24px;
+	position: absolute;
+	left: 50%;
+	width: 28px;
+	border-radius: 50%;
+	transform: translateX(-50%);
+}
+buttton {
+	cursor:pointer;
+
 }

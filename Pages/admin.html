@@ -2,7 +2,7 @@
 <html lang="pl">
 <head id="head1" runat="server">
     <meta charset="utf-8" />
-
+	<link rel="stylesheet" href="styleadmin.css" type="text/css" />
     <script type="text/javascript">
 
 
@@ -236,46 +236,38 @@
 
 </head>
 <body>
-    <h2>Panel administratora</h2>
-
-    <label for="proba"> Maksymalna liczba prób wpisania hasła</label><br><br>
+<form autocomplete="off">
+<div class="container">
+	<input type="text" id="employeeid" placeholder=" " />
+	<label for="employeeid"> Podaj id pracownika</label>
     <input type="submit" onclick="showEmployeeData()" value="Pokaz pracownika" />
-
-
-    <br>
-    <label for="jednorazowe"><b>Jednorazowe hasło</b></label><br />
-    <label> Podaj id pracownika</label><input type="text" id="employeeid" /> <br /><br />
+	</div>
     <div>
         <ul class="employeedata"></ul>
     </div>
-    <input type="submit" value="Ustaw jednorazowe hasło" onclick="UpdateEmployee()" /><br />
-    <br>
-
-
+	<div class="container">
+    <input type="submit" value="Ustaw jednorazowe hasło" onclick="UpdateEmployee()" />
     <input type="submit" onclick="getRandom()" value="Random generator" />
     <input type="submit" id="log" onclick="showLogs()" value="Pokaz logi" />
     <input type="submit" onclick="showUsers()" value="Pokaz użytkowników" />
     <input type="submit" onclick="showEmployee()" value="Pokaz pracownikow" />
-
+	</div>
     <div id="wynikLogs">
         <h1>Logs:</h1>
         <ul class="logTable"></ul>
-
-    </div><br>
-    <div>
+</div>
+<div class="container"><br><br>
         <h1>Users:</h1>
         <ul class="users"></ul>
+</div>
 
-    </div><br>
+<div class="container"><br><br>
 
-    <div>
-        <br />
-        <h1>Employee</h1>
+        <h1>Employee:</h1>
         <ul class="employee"></ul>
-    </div>
 
+</div>
 
-
-
+</form>
 </body>
 </html>
