@@ -2,7 +2,7 @@
 <html lang="pl">
 <head id="head1" runat="server">
     <meta charset="utf-8" />
-	<link rel="stylesheet" href="stylelogowanie.css" type="text/css" />
+    <link rel="stylesheet" href="stylelogowanie.css" type="text/css" />
 
     <script type="text/javascript">
 
@@ -58,7 +58,7 @@
 
 
         }
-        
+
         function oneTimePass() {
 
             if (document.getElementById("password").value == wynik.toPrecision(2)) {
@@ -72,30 +72,29 @@
         function redirect() {
             window.location.replace("https://localhost:7259/api/user/homepage")
         }
-</script>
+    </script>
 
 
 </head>
 <body>
 
-<form autocomplete="off">
-<div class ="icon" aria-hidden="true"></div>
-<div class="container">
-<input type="text" id="login" placeholder=" "/>
-<label for ="login">Login</label>
-</div>
+    <form >
+        <div class="icon" aria-hidden="true"></div>
+        <div class="container">
+            <input type="text" id="login" placeholder="Login" />
+        </div>
 
-<div class="container">
-<input type="password" id="password" placeholder=" "/>
-<label for ="password">Hasło</label>
-</div>
+        <div class="container">
+            <input type="password" id="password" placeholder="Haslo" />
+        </div>
 
-<div class ="spacer"></div>
+        <div class="spacer"></div>
 
-<button onclick="logIn()">Zaloguj</button>
+        <input type="submit" value="Zaloguj" onclick="logIn()" />
 
-<div id="wynik"></div>
-</div>
-</form>
+
+    </form>
+
 </body>
 </html>
+
