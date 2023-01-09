@@ -1,84 +1,93 @@
-
-* {
-	box-sizing: border-box;
-	margin: 0px;
-	padding: 0px;
-	
-}
-body {
-	font-family: Arial;
-	font-size: 17px;
-	background: linear-gradient(to top right, blue, white);
-	height: 100vh;
-	width: 100vw;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-form {
-	background: linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.35));
-	width: 1400px;
-	height: 1000px;
-	padding: 36px 24px;
-	text-align: center;
-	border-radius: 20px;
-	box-shadow: 0px 8px 24px 0 rgba(0,0,0,0.3);
-}
-.container{
-	margin-bottom: 32px;
-	position: relative;
-	
+	ul li {
+		display: flex;
+		align-items: center;
+		padding: 8px;
+		border-bottom: 1px solid #ddd;
+	}
+
+		ul li:nth-child(even) {
+			background-color: #f5f5f5;
+		}
+
+		ul li span {
+			flex: 1;
+			font-weight: bold;
+			margin-right: 8px;
+		}
+
+			ul li span.timestamp {
+				font-style: italic;
+			}
+
+.container {
+	margin-bottom: 20px;
 }
 
-.wynikLogs{
-	margin-bottom: 32px;
-	position: relative;
-	
+	.container input[type="submit"] {
+		margin: 0 10px;
+		padding: 5px 10px;
+		background-color: #4caf50;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+		.container input[type="submit"]:hover {
+			background-color: #46a049;
+		}
+
+h1, h2 {
+	color: #2196f3;
+	font-family: sans-serif;
+}
+ul.logTable,
+ul.users,
+ul.employee {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
-input,
-button {
-	background: linear-gradient(to left, rgba(255,255,255,0.1), rgba(255,255,255,0.25));
-	border:none;
-	border-radius: 18px;
-	box-shadow: 0px 8px 24px 0 rgba(0,0,0,0.3);
-	color: white;
-	font-size: 15px;
-	padding: 12px 24px;
-	transition: box-shadow 0.3s;
-}
+	ul.logTable li,
+	ul.users li,
+	ul.employee li {
+		border-bottom: 1px solid #ccc;
+		padding: 12px;
+	}
 
-input {
-	width: 200px;	
-}
+		ul.logTable li:last-child,
+		ul.users li:last-child,
+		ul.employee li:last-child {
+			border-bottom: none;
+		}
 
-label {
-	cursor: text;
-	color:white;
-	left: 37%;
-	font-style: italic;
-	opacity: 0.4;
-	position: absolute;
-	top:50%;
-	transform: translateY(-50%);
-	transition: left 0.3s, opacity 0.3s;
-}
+		ul.logTable li h3,
+		ul.users li h3,
+		ul.employee li h3 {
+			display: inline-block;
+			margin: 0;
+			font-size: 18px;
+			font-weight: normal;
+		}
 
-input:focus + label,
-input:not(:placeholder-shown) + label {
-	opacity: 0;
-}
+		ul.logTable li p,
+		ul.users li p,
+		ul.employee li p {
+			display: inline-block;
+			margin: 0;
+			font-size: 14px;
+			font-weight: normal;
+			color: #666;
+		}
 
-input:hover {
-	box-shadow: 0px 8px 12px 0 rgba(0,0,0,0.3);
-}
-input:focus {
-	outline: solid 3px rgba(255,255,255,0.8);
-}
-
-buttton {
-	cursor:pointer;
-
+input[type="submit"]:hover {
+	cursor: pointer;
+	background-color: #ccc;
 }

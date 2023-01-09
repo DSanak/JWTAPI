@@ -2,7 +2,7 @@
 <html lang="pl">
 <head id="head1" runat="server">
     <meta charset="utf-8" />
-	<link rel="stylesheet" href="styleadmin.css" type="text/css" />
+    <link rel="stylesheet" href="styleadmin.css" type="text/css" />
     <script type="text/javascript">
 
 
@@ -10,7 +10,7 @@
         const token = (document.cookie.split('=')[1]).replace(/(\r\n|\n|\r)/gm, "")
         const tokenRel = `Bearer ${token}`
 
-        
+
         const email = localStorage.getItem("email");
         let employeID;
         let usersData;
@@ -28,12 +28,12 @@
                 .then(data => {
                     employeeData = data;
                     const markup = `<li>
-                            EmployeeID: ${data.employeeID}
-                            Display name: ${data.employeeName}
-                            Login: ${data.loginID}
-                            TOTPPassword: ${data.password}
+                                    EmployeeID: ${data.employeeID}
+                                    Display name: ${data.employeeName}
+                                    Login: ${data.loginID}
+                                    TOTPPassword: ${data.password}
 
-                                 </li>`;
+                                         </li>`;
                     document.querySelector('ul.employeedata').innerHTML = "";
                     document.querySelector("ul.employeedata").insertAdjacentHTML('beforeend', markup)
                 });
@@ -42,7 +42,7 @@
 
 
         async function showUsers() {
-            
+
             var myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer " + token);
             var requestOptions = {
@@ -57,44 +57,58 @@
                     return res.json();
                 })
                 .then(data => {
-                //    usersData = data.find(user => user.userId == document.getElementById("userId").value);
+                    //    usersData = data.find(user => user.userId == document.getElementById("userId").value);
                     console.log(usersData);
                     document.querySelector('ul.users').innerHTML = "";
                     data.forEach(user => {
                         const markup = `<li>
-                               UserId: ${user.userId}
-                               Display name: ${user.displayName}
-                               Name: ${user.userName}
-                               Email: ${user.email}
-                               Last login ${user.lastLogin}
-                               Createddata ${user.lastLogin}
+                                       UserId: ${user.userId}
+                                       Display name: ${user.displayName}
+                                       Name: ${user.userName}
+                                       Email: ${user.email}
+                                       Last login ${user.lastLogin}
+                                       Createddata ${user.lastLogin}
 
-                                 </li>`;
+                                         </li>`;
                         document.querySelector('ul.users').insertAdjacentHTML('beforeend', markup);
                     });
                 });
         }
 
         function showLogs() {
-
-            fetch("https://localhost:7259/api/logs")
-                .then(res => {
-                    return res.json();
-                })
-                .then(data => {
-                    data.forEach(logs => {
-                        const markup = `<li>
-                               userID:  ${logs.userID}
-                               timestamp: ${logs.timestamp}
-                               descryption: ${logs.descryption}
-
-                                 </li>`;
-
-                        document.querySelector('ul.logTable').insertAdjacentHTML('beforeend', markup);
+            const logContainer = document.getElementById("wynikLogs");
+            if (logContainer.style.display === "none") {
+                logContainer.style.display = "block";
+                document.querySelector("ul.logTable").innerHTML = "";
+                let counter = 0;
+                fetch("https://localhost:7259/api/logs")
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(data => {
+                        data.sort((a, b) => {
+                            return new Date(b.timestamp) - new Date(a.timestamp);
+                        });
+                        data.forEach(logs => {
+                            if (counter >= 20) {
+                                return;
+                            }
+                            counter++;
+                            const markup = `<li>
+                              userID: ${logs.userID}
+                              timestamp: ${logs.timestamp}
+                              descryption: ${logs.descryption}
+                           </li>`;
+                            document.querySelector("ul.logTable").insertAdjacentHTML("beforeend", markup);
+                        });
                     });
-                });
-
+            } else {
+                logContainer.style.display = "none";
+            }
         }
+
+
+
 
         function showEmployee() {
 
@@ -105,11 +119,11 @@
                     document.querySelector('ul.employee').innerHTML = "";
                     data.forEach(employee => {
                         const markup = `<li>
-                            EmployeeID: ${employee.employeeID}
-                            Display name: ${employee.employeeName}
-                            Login: ${employee.loginID}
-                            TOTPPassword: ${employee.password}
-                                 </li>`;
+                                    EmployeeID: ${employee.employeeID}
+                                    Display name: ${employee.employeeName}
+                                    Login: ${employee.loginID}
+                                    TOTPPassword: ${employee.password}
+                                         </li>`;
                         document.querySelector('ul.employee').insertAdjacentHTML('beforeend', markup);
                     })
                 })
@@ -141,7 +155,7 @@
 
                                 let wynik = (employeeData.loginID.length * Math.sin(random)).toPrecision(2)
 
-                                
+
 
 
                                 var myHeaders = new Headers();
@@ -180,7 +194,7 @@
 
         function getRandom() {
 
- 
+
 
 
         }
@@ -228,46 +242,43 @@
 
         }
 
-        
-
-
-
     </script>
 
 </head>
 <body>
-<form autocomplete="off">
-<div class="container">
-	<input type="text" id="employeeid" placeholder=" " />
-	<label for="employeeid"> Podaj id pracownika</label>
-    <input type="submit" onclick="showEmployeeData()" value="Pokaz pracownika" />
-	</div>
+
+    <div class="container">
+        <h2>Wyszukiwanie pracownika</h2>
+        <input type="text" id="employeeid" placeholder="ID pracownika" />
+        <input type="submit" onclick="showEmployeeData()" value="Pokaż dane pracownika" />
+    </div>
     <div>
+        <h2>Dane pracownika</h2>
         <ul class="employeedata"></ul>
     </div>
-	<div class="container">
-    <input type="submit" value="Ustaw jednorazowe hasło" onclick="UpdateEmployee()" />
-    <input type="submit" onclick="getRandom()" value="Random generator" />
-    <input type="submit" id="log" onclick="showLogs()" value="Pokaz logi" />
-    <input type="submit" onclick="showUsers()" value="Pokaz użytkowników" />
-    <input type="submit" onclick="showEmployee()" value="Pokaz pracownikow" />
-	</div>
+    <div class="container">
+        <h2>Akcje</h2>
+        <input type="submit" value="Ustaw hasło jednorazowe" onclick="UpdateEmployee()" />
+        <input type="submit" onclick="getRandom()" value="Generator losowy" />
+        <input type="submit" id="log" onclick="showLogs()" value="Pokaż logi" />
+        <input type="submit" onclick="showUsers()" value="Pokaż użytkowników" />
+        <input type="submit" onclick="showEmployee();" value="Pokaż pracowników" />
+    </div>
     <div id="wynikLogs">
-        <h1>Logs:</h1>
+        <h2>Logi</h2>
         <ul class="logTable"></ul>
-</div>
-<div class="container"><br><br>
-        <h1>Users:</h1>
+    </div>
+    <div class="container">
+        <h2>Użytkownicy</h2>
         <ul class="users"></ul>
-</div>
+    </div>
 
-<div class="container"><br><br>
+    <div class="container">
+        <h2>Pracownicy</h2>
 
-        <h1>Employee:</h1>
         <ul class="employee"></ul>
+    </div>
 
-</div>
 
-</form>
 </body>
 </html>
