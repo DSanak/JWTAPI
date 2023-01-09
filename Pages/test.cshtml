@@ -1,0 +1,42 @@
+﻿@page
+@model JWTAPI.Pages.testModel
+@{
+	<script>
+async function test(){
+	await alert("Test")
+}
+	</script>
+    <h2>TEST</h2>
+
+    <div id ="srodek">
+    <h1>Profil użytkownika</h1>
+<form>
+	<label for="login"><b>Login</b> <input type="text" id="login"/></label>
+	<br>
+	<br>
+    <label for="imie"><b>Imię</b> <input type="password" id="imie" /></label>
+	<br>
+	<br>
+	<label for="nazwisko"><b>Nazwisko</b> <input type="text" id="nazwisko"/></label>
+	<br>
+	<br>
+	<label for="email"><b>Email</b> <input type="text" id="email"/></label>
+	<br>
+	<br>
+	<label for="telefon"><b>Telefon</b> <input type="text" id="telefon"/></label>
+	<br>
+	<br>
+<label for="typ"><b>Typ</b></label>
+ <select name="typ">
+    <option value="user">Uzytkownik</option>
+</select>
+<br>
+
+<br>
+<label for="haslo"><b>Hasło</b> <input type="password" id="haslo" value="*****"/></label><br><br>
+<input type="submit" value="Resetuj hasło" onclick="test()"/>
+</form>
+<br>
+<button type="submit">Zapisz</button>
+</div>
+}

@@ -42,26 +42,29 @@
 
 
         async function showUsers() {
-            
-            var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer " + token);
-            var requestOptions = {
-                method: 'GET',
-                headers: myHeaders,
-                redirect: 'follow'
-            };
-            console.log(requestOptions)
 
-            fetch("https://localhost:7259/api/user/", requestOptions)
-                .then(res => {
-                    return res.json();
-                })
-                .then(data => {
-                //    usersData = data.find(user => user.userId == document.getElementById("userId").value);
-                    console.log(usersData);
-                    document.querySelector('ul.users').innerHTML = "";
-                    data.forEach(user => {
-                        const markup = `<li>
+            const userList = document.querySelector('ul.users');
+            if (userList.style.display === 'none') {
+                userList.style.display = 'block';
+                var myHeaders = new Headers();
+                myHeaders.append("Authorization", "Bearer " + token);
+                var requestOptions = {
+                    method: 'GET',
+                    headers: myHeaders,
+                    redirect: 'follow'
+                };
+                console.log(requestOptions)
+
+                fetch("https://localhost:7259/api/user/", requestOptions)
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(data => {
+                        //    usersData = data.find(user => user.userId == document.getElementById("userId").value);
+                        console.log(usersData);
+                        document.querySelector('ul.users').innerHTML = "";
+                        data.forEach(user => {
+                            const markup = `<li>
                                UserId: ${user.userId}
                                Display name: ${user.displayName}
                                Name: ${user.userName}
@@ -70,50 +73,79 @@
                                Createddata ${user.lastLogin}
 
                                  </li>`;
-                        document.querySelector('ul.users').insertAdjacentHTML('beforeend', markup);
+                            document.querySelector('ul.users').insertAdjacentHTML('beforeend', markup);
+                        });
                     });
-                });
+            } else {
+                userList.style.display = 'none';
+            }
         }
 
         function showLogs() {
-
-            fetch("https://localhost:7259/api/logs")
-                .then(res => {
-                    return res.json();
-                })
-                .then(data => {
-                    data.forEach(logs => {
-                        const markup = `<li>
-                               userID:  ${logs.userID}
-                               timestamp: ${logs.timestamp}
-                               descryption: ${logs.descryption}
-
-                                 </li>`;
-
-                        document.querySelector('ul.logTable').insertAdjacentHTML('beforeend', markup);
+            const limit = 30;
+            let counter = 0;
+            const logsList = document.querySelector('ul.logTable');
+            if (logsList.style.display === 'none') {
+                logsList.style.display = 'block';
+                fetch("https://localhost:7259/api/logs")
+                    .then(res => res.json())
+                    .then(data => {
+                        // Posortuj logi według daty i godziny zapisu
+                        data.sort((a, b) => {
+                            const aTimestamp = new Date(a.timestamp);
+                            const bTimestamp = new Date(b.timestamp);
+                            if (aTimestamp < bTimestamp) {
+                                return 1;
+                            } else if (aTimestamp > bTimestamp) {
+                                return -1;
+                            } else {
+                                return 0;
+                            }
+                        });
+                        data.forEach(logs => {
+                            if (counter >= limit) {
+                                return;
+                            }
+                            const markup = `<li>
+            userID:  ${logs.userID}
+            timestamp: ${logs.timestamp}
+            descryption: ${logs.descryption}
+          </li>`;
+                            logsList.insertAdjacentHTML('beforeend', markup);
+                            counter++;
+                        });
                     });
-                });
-
+            } else {
+                logsList.style.display = 'none';
+            }
         }
+
+
+
 
         function showEmployee() {
-
-
-            fetch("https://localhost:7259/api/employee")
-                .then(response => response.json())
-                .then(data => {
-                    document.querySelector('ul.employee').innerHTML = "";
-                    data.forEach(employee => {
-                        const markup = `<li>
-                            EmployeeID: ${employee.employeeID}
-                            Display name: ${employee.employeeName}
-                            Login: ${employee.loginID}
-                            TOTPPassword: ${employee.password}
-                                 </li>`;
-                        document.querySelector('ul.employee').insertAdjacentHTML('beforeend', markup);
-                    })
-                })
+            const employeesList = document.querySelector('ul.employee');
+            if (employeesList.style.display === 'none') {
+                employeesList.style.display = 'block';
+                fetch("https://localhost:7259/api/employee")
+                    .then(response => response.json())
+                    .then(data => {
+                        employeesList.innerHTML = "";
+                        data.forEach(employee => {
+                            const markup = `<li>
+              EmployeeID: ${employee.employeeID}
+              Display name: ${employee.employeeName}
+              Login: ${employee.loginID}
+              TOTPPassword: ${employee.password}
+            </li>`;
+                            employeesList.insertAdjacentHTML('beforeend', markup);
+                        });
+                    });
+            } else {
+                employeesList.style.display = 'none';
+            }
         }
+
 
 
         function AddEmployee() {
@@ -140,9 +172,6 @@
                                 let random = Math.floor(Math.random() * 50);
 
                                 let wynik = (employeeData.loginID.length * Math.sin(random)).toPrecision(2)
-
-                                
-
 
                                 var myHeaders = new Headers();
                                 myHeaders.append("Content-Type", "application/json");
