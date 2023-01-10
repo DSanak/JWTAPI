@@ -65,11 +65,12 @@ namespace JWTAPI.Controllers
             return base.Content(fileContent, "text/css");
         }
 
-        [Authorize]
+       // [Authorize]
         [Route("admin")]
         [HttpGet]
         public ActionResult admin()
         {
+
             var fileContent = System.IO.File.ReadAllText("Pages/admin.html");
             return base.Content(fileContent, "text/html");
 

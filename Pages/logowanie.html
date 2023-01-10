@@ -28,15 +28,16 @@
             fetch("https://localhost:7259/api/token", requestOptions)
                 .then(response => {
                     if (response.ok) {
-                        localStorage.setItem("email", document.getElementById("login").value);
                         return response.text()
                             .then(data => {
-                                document.cookie = `access_token=${data}`
                                 localStorage.setItem("tokenik", data);
-                                console.log(document.cookie);
-                                window.location.href = "https://localhost:7259/api/user/admin"
+                                window.location.assign("https://localhost:7259/api/user/admin")
                             })
-                    }else alert("Nie udało się zalogować")
+                            .catch(error => console.error('Error:', error));
+
+                    } else {
+                        console.error("Nie udało się zalogować")
+                    }
                 })
         }
 
@@ -77,8 +78,8 @@
 
 </head>
 <body>
-
-    <form >
+    <form>
+        <div class="main"></div>
         <div class="icon" aria-hidden="true"></div>
         <div class="container">
             <input type="text" id="login" placeholder="Login" />
@@ -90,11 +91,9 @@
 
         <div class="spacer"></div>
 
-        <input type="submit" value="Zaloguj" onclick="logIn()" />
-
+        <input type="button" value="Zaloguj" onclick="logIn()" />
 
     </form>
-
 </body>
 </html>
 
