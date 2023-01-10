@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace JWTAPI.Controllers
 {
+ // [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -29,25 +30,21 @@ namespace JWTAPI.Controllers
             _IUser = IUser;
         }
 
-        [Authorize]
-        // GET: api/user>
+        [Route("homepage")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
+        public ActionResult HomePage()
         {
-            var data = DateTime.Now;
-            var t = new Logs
-            {
-                userID = Singleton.Instance.saveIdusera,
-                Descryption = $"Wyswietlenie userow",
-                Timestamp = data
-            };
-
-            _IUser.AddLogs(t);
-
-            return await Task.FromResult(_IUser.GetUserDetails());
-
+            var fileContent = System.IO.File.ReadAllText("Pages/homepage.html");
+            return base.Content(fileContent, "text/html");
         }
 
+        [Route("homepage.css")]
+        [HttpGet]
+        public ActionResult homepagecss()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/homepage.css");
+            return base.Content(fileContent, "text/css");
+        }
 
 
         [Route("logowanie")]
@@ -66,10 +63,9 @@ namespace JWTAPI.Controllers
         {
             var fileContent = System.IO.File.ReadAllText("Pages/stylelogowanie.css");
             return base.Content(fileContent, "text/css");
-
-
         }
 
+        [Authorize]
         [Route("admin")]
         [HttpGet]
         public ActionResult admin()
@@ -107,6 +103,27 @@ namespace JWTAPI.Controllers
 
 
         }
+
+        [Authorize]
+        // GET: api/user>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
+        {
+            var data = DateTime.Now;
+            var t = new Logs
+            {
+                userID = Singleton.Instance.saveIdusera,
+                Descryption = $"Wyswietlenie userow",
+                Timestamp = data
+            };
+
+            _IUser.AddLogs(t);
+
+            return await Task.FromResult(_IUser.GetUserDetails());
+
+        }
+
+
         [Authorize]
         // GET api/user/5
         [HttpGet("{id}")]

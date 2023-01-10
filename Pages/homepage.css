@@ -1,0 +1,50 @@
+﻿body {
+    background-color: #f2f2f2; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+}
+
+h1 {
+    animation: wave 2s infinite; 
+    text-align: center; 
+}
+
+@keyframes wave { /* definicja animacji */
+    0% {
+        transform: rotate(2deg); /* początkowa pozycja */
+    }
+
+    10% {
+        transform: rotate(-2deg); /* pozycja po 10% czasu trwania */
+    }
+
+    20% {
+        transform: rotate(2deg); /* pozycja po 20% czasu trwania */
+    }
+
+    30% {
+        transform: rotate(-2deg); /* pozycja po 30% czasu trwania */
+    }
+    /* itd. */
+    100% {
+        transform: rotate(2deg); /* końcowa pozycja */
+    }
+}
+
+ul {
+    list-style-type: none; 
+}
+
+li {
+    margin: 20px; 
+}
+
+a {
+    text-decoration: none; 
+    padding: 10px 20px; 
+    border-radius: 50px;
+    background-color: #4CAF50; 
+    color: white; 
+}
