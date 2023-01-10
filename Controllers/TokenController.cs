@@ -56,7 +56,7 @@ namespace JWTAPI.Controllers
                         _configuration["Jwt:Issuer"],
                         _configuration["Jwt:Audience"],
                         claims,
-                        expires: DateTime.UtcNow.AddMinutes(10),
+                        expires: DateTime.UtcNow.AddMinutes(20),
                         signingCredentials: signIn);
 
                     //Add Timestamp for Last login to DB
