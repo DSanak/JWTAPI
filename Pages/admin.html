@@ -6,9 +6,9 @@
     <script type="text/javascript">
 
 
-
-        const token = (document.cookie.split('=')[1]).replace(/(\r\n|\n|\r)/gm, "")
-        const tokenRel = `Bearer ${token}`
+        const token = localStorage.getItem('tokenik');
+      // const token = (document.cookie.split('=')[1]).replace(/(\r\n|\n|\r)/gm, "")
+     //   const tokenRel = `Bearer ${token}`
 
 
         const email = localStorage.getItem("email");
@@ -20,6 +20,10 @@
         function showEmployeeData() {
 
             employeID = document.getElementById("employeeid").value;
+            if (!employeID) {
+                showEmployee();
+            } else {
+
 
             fetch("https://localhost:7259/api/employee/" + employeID)
                 .then(res => {
@@ -37,6 +41,7 @@
                     document.querySelector('ul.employeedata').innerHTML = "";
                     document.querySelector("ul.employeedata").insertAdjacentHTML('beforeend', markup)
                 });
+            }
         }
 
 
@@ -54,7 +59,10 @@
 
             fetch("https://localhost:7259/api/user/", requestOptions)
                 .then(res => {
+                    if (res.ok) {
+
                     return res.json();
+                    }else alert("Niepoprawny token?")
                 })
                 .then(data => {
                     //    usersData = data.find(user => user.userId == document.getElementById("userId").value);
@@ -175,14 +183,14 @@
                                     redirect: 'follow'
                                 };
 
-                                fetch("https://localhost:7259/api/employee/4", requestOptions)
+                                fetch("https://localhost:7259/api/employee/" + userid, requestOptions)
                                     .then(response => response.text())
                                     .then(result => console.log(result))
                                     .catch(error => console.log('error', error));
                             });
                     } else alert("Brak usera");
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => console.log('error blabla', error));
 
 
 
