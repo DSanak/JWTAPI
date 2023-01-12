@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace JWTAPI.Controllers
 {
@@ -104,6 +105,39 @@ namespace JWTAPI.Controllers
             }
             else return BadRequest();
         }
+
+
+        private static readonly Random _random = new Random();
+        private static readonly string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        private static string RandomString(int length)
+        {
+            return new string(Enumerable.Repeat(_chars, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        //generate the original string here
+
+        [HttpPost("captcha")]
+        public ActionResult<bool> VerifyCaptcha([FromBody] CaptchaDTO captchaDTO)
+        {
+            if (captchaDTO.userInput == captchaDTO.originalString)
+            {
+                return true;
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        public class CaptchaDTO
+        {
+            public string userInput { get; set; }
+            public string originalString { get; set; }
+        }
+
+
 
 
         private async Task<UserInfo> GetUser(string email, string password)
