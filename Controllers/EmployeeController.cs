@@ -156,6 +156,16 @@ namespace JWTAPI.Controllers
 
         }
 
+        [Route("stylelogowanie.css")]
+        [HttpGet]
+        public ActionResult LogowanieCss()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/stylelogowanie.css");
+            return base.Content(fileContent, "text/css");
+
+
+        }
+
 
 
         private bool EmployeeExists(int id)
