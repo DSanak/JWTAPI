@@ -1,5 +1,6 @@
 ﻿using JWTAPI.Interface;
 using JWTAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JWTAPI.Controllers
@@ -15,6 +16,7 @@ namespace JWTAPI.Controllers
             _ILogs = ILogs;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Logs>>> Get()
         {
