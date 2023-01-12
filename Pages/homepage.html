@@ -4,13 +4,19 @@
     <title>Strona startowa</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="homepage.css">
+
+    <script>
+        function register() {
+            alert("TODO")
+        }
+    </script>
 </head>
 <body>
     <h1>Dzień dobry, co chcesz zrobić?</h1>
     <ul>
         <li><a href="https://localhost:7259/api/employee/logowanie">Logowanie jako pracownik</a></li>
         <li><a href="https://localhost:7259/api/user/logowanie">Logowanie jako administrator</a></li>
-        <li><a href="https://localhost:7259/api/user/user">Rejestracja</a></li>
+        <li><button onclick="register()">Rejestracja</button></li>
     </ul>
 </body>
 </html>

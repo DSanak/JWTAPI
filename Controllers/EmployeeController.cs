@@ -153,6 +153,33 @@ namespace JWTAPI.Controllers
             return base.Content(fileContent, "text/html");
         }
 
+        [Route("styleuzytkownik.css")]
+        [HttpGet]
+        public ActionResult styleUzytkownika()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/styleuzytkownik.css");
+            return base.Content(fileContent, "text/css");
+        }
+
+        [Route("user")]
+        [HttpGet]
+        public ActionResult Uzytkownik()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/user.html");
+            return base.Content(fileContent, "text/html");
+
+        }
+
+        [Route("styleprofiluzytkownika.css")]
+        [HttpGet]
+        public ActionResult styleProfilUzytkownika()
+        {
+            var fileContent = System.IO.File.ReadAllText("Pages/styleprofiluzytkownika.css");
+            return base.Content(fileContent, "text/css");
+        }
+        
+
+
         private bool EmployeeExists(int id)
         {
             return _IEmployee.CheckEmployee(id);

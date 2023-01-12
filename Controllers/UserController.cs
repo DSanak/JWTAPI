@@ -75,14 +75,6 @@ namespace JWTAPI.Controllers
 
         }
 
-        [Route("user")]
-        [HttpGet]
-        public ActionResult Uzytkownik()
-        {
-            var fileContent = System.IO.File.ReadAllText("Pages/user.html");
-            return base.Content(fileContent, "text/html");
-
-        }
         [Route("styleuzytkownik.css")]
         [HttpGet]
         public ActionResult uzytkownikcss()

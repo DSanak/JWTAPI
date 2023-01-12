@@ -8,7 +8,7 @@
 body {
 	font-family: Arial;
 	font-size: 22px;
-	background: linear-gradient(to top right, blue, white);
+	background: linear-gradient(to top right, green, white);
 	height: 100vh;
 	width: 100vw;
 	display: flex;

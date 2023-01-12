@@ -48,3 +48,10 @@ a {
     background-color: #4CAF50; 
     color: white; 
 }
+button {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #4CAF50;
+    color: white;
+}

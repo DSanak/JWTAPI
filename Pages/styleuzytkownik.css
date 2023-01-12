@@ -1,112 +1,117 @@
-
-* {
-	box-sizing: border-box;
-	margin: 0px;
-	padding: 0px;
-	
-}
 body {
-	font-family: Arial;
-	font-size: 17px;
-	background: linear-gradient(to top right, blue, white);
-	height: 100vh;
-	width: 100vw;
+	background-color: #f2f2f2;
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	
+	justify-content: center;
+	height: 100vh;
 }
 
-form {
-	background: linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.35));
-	width: 300px;
-	padding: 36px 24px;
+#srodek {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	background-color: #f2f2f2;
+}
+
+h1 {
+	animation: wave 2s infinite;
 	text-align: center;
-	border-radius: 20px;
-	box-shadow: 0px 8px 24px 0 rgba(0,0,0,0.3);
-}
-.container {
-	margin-bottom: 32px;
-	position: relative;
-	
+	color: #4CAF50;
 }
 
-input,
-button {
-	background: linear-gradient(to left, rgba(255,255,255,0.1), rgba(255,255,255,0.25));
-	border:none;
-	border-radius: 18px;
-	box-shadow: 0px 8px 24px 0 rgba(0,0,0,0.3);
-	color: white;
-	font-size: 20px;
-	padding: 12px 24px;
-	transition: box-shadow 0.3s;
+#loginForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	padding: 20px;
+	background-color: #f2f2f2;
 }
 
-input {
-	width: 200px;	
+	#loginForm input[type="text"], #loginForm input[type="password"] {
+		margin: 10px 0;
+		padding: 5px;
+		border: dashed;
+		border-radius: 5px;
+		width: 80%;
+		background-color: #f2f2f2;
+	}
+
+	#loginForm input[type="submit"] {
+		background-color: #4CAF50;
+		color: white;
+		padding: 5px;
+		border: none;
+		border-radius: 5px;
+		width: 40%;
+		cursor: pointer;
+		animation: pulse 1s infinite;
+	}
+
+#loginAtempts {
+	color: red;
+	animation: shake 0.5s;
 }
 
-label {
-	cursor: text;
-	color:white;
-	left: 80px;
-	font-style: italic;
-	opacity: 0.4;
-	position: absolute;
-	top:50%;
-	transform: translateY(-50%);
-	transition: left 0.3s, opacity 0.3s;
+#timeToLogin {
+	color: #4CAF50;
 }
 
-input:focus + label,
-input:not(:placeholder-shown) + label {
-	opacity: 0;
+@keyframes wave { /* definicja animacji */
+	0% {
+		transform: rotate(2deg); /* pocz¹tkowa pozycja */
+	}
+
+	10% {
+		transform: rotate(-2deg); /* pozycja po 10% czasu trwania */
+	}
+
+	20% {
+		transform: rotate(2deg); /* pozycja po 20% czasu trwania */
+	}
+
+	30% {
+		transform: rotate(-2deg); /* pozycja po 30% czasu trwania */
+	}
+	/* itd. */
+	100% {
+		transform: rotate(2deg); /* koñcowa pozycja */
+	}
 }
 
-input:hover {
-	box-shadow: 0px 8px 12px 0 rgba(0,0,0,0.3);
-}
-input:focus {
-	outline: solid 3px rgba(255,255,255,0.8);
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.05);
+	}
+
+	100% {
+		transform: scale(1);
+	}
 }
 
-.icon{
-	margin: 0 auto 24px;
-	height:72px;
-	width: 72px;
-	border: solid 3px rgba(255,255,255,0.6);
-	border-radius: 50%;
-	overflow: hidden;
-	position: relative;
-	
-}
+@keyframes shake {
+	0% {
+		transform: translate(2px, 1px);
+	}
 
-.icon:before{
-	
-	background: rgba(255,255,255,0.6);
-	bottom: 0;
-	content: " ";
-	display: block;
-	height: 24px;
-	position: absolute;
-	width: 64px;
-	border-radius: 50%;
-}
+	25% {
+		transform: translate(-2px, -1px);
+	}
 
-.icon:after{
-	background: rgba(255,255,255,0.6);
-	bottom: 50%;
-	content: " ";
-	display: block;
-	height: 24px;
-	position: absolute;
-	left: 50%;
-	width: 28px;
-	border-radius: 50%;
-	transform: translateX(-50%);
-}
-buttton {
-	cursor:pointer;
+	50% {
+		transform: translate(2px, 1px);
+	}
 
+	75% {
+		transform: translate(-2px, -1px);
+	}
+
+	100% {
+		transform: translate(0);
+	}
 }
