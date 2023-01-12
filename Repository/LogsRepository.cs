@@ -1,6 +1,5 @@
 ﻿using JWTAPI.Interface;
 using JWTAPI.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace JWTAPI.Repository
 {

@@ -7,7 +7,7 @@ namespace JWTAPI.Controllers
 {
     [Route("api/logs")]
     [ApiController]
-    public class LogsController :ControllerBase
+    public class LogsController : ControllerBase
     {
         private readonly ILogs _ILogs;
 

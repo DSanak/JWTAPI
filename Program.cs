@@ -2,7 +2,6 @@ using JWTAPI.Interface;
 using JWTAPI.Models;
 using JWTAPI.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

@@ -20,7 +20,8 @@
                     if (instance == null)
                     {
                         instance = new Singleton();
-                    }return instance;
+                    }
+                    return instance;
                 }
             }
         }

@@ -21,7 +21,7 @@ namespace JWTAPI.Models
         {
             modelBuilder.Entity<Logs>(entity =>
             {
-               
+
                 entity.ToTable("Logs");
                 entity.Property(e => e.LogId).HasColumnName("LogId");
                 entity.Property(e => e.userID).HasColumnName("userID");
@@ -32,7 +32,7 @@ namespace JWTAPI.Models
 
             modelBuilder.Entity<UserInfo>(entity =>
             {
-               // entity.HasNoKey();
+                // entity.HasNoKey();
                 entity.ToTable("UserInfo");
                 entity.Property(e => e.UserId).HasColumnName("UserId");
                 entity.Property(e => e.DisplayName).HasMaxLength(60).IsUnicode(false);

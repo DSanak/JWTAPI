@@ -1,13 +1,11 @@
 ﻿using JWTAPI.Interface;
 using JWTAPI.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JWTAPI.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     [Route("api/employee")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -55,7 +53,7 @@ namespace JWTAPI.Controllers
             var t = new Logs
             {
                 userID = Singleton.Instance.saveIdusera,
-                Descryption = $"Wyświetlenie pracownika o id: "+id,
+                Descryption = $"Wyświetlenie pracownika o id: " + id,
                 Timestamp = data
             };
 
@@ -140,8 +138,9 @@ namespace JWTAPI.Controllers
                 };
 
                 _IUser.AddLogs(t);
-            return await Task.FromResult(employee);
-            }else return NotFound();
+                return await Task.FromResult(employee);
+            }
+            else return NotFound();
 
         }
 
@@ -152,11 +151,7 @@ namespace JWTAPI.Controllers
         {
             var fileContent = System.IO.File.ReadAllText("Pages/userLogin.html");
             return base.Content(fileContent, "text/html");
-
-
         }
-
-
 
         private bool EmployeeExists(int id)
         {

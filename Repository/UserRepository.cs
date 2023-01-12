@@ -66,7 +66,8 @@ namespace JWTAPI.Repository
                 _dbContext.Loging.Add(logs);
                 _dbContext.SaveChanges();
 
-            }catch
+            }
+            catch
             {
                 throw;
             }

@@ -1,24 +1,12 @@
 ﻿using JWTAPI.Interface;
 using JWTAPI.Models;
-using JWTAPI.Controllers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RTools_NTS.Util;
-using JWTAPI.Pages;
-using JWTAPI.Pages.Shared;
-using System.Text;
-using System.Net;
-using System.Net.Http.Formatting;
-using System.Text.RegularExpressions;
-using System.Security.Cryptography.Xml;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace JWTAPI.Controllers
 {
- // [Authorize]
+    // [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -65,7 +53,7 @@ namespace JWTAPI.Controllers
             return base.Content(fileContent, "text/css");
         }
 
-       // [Authorize]
+        // [Authorize]
         [Route("admin")]
         [HttpGet]
         public ActionResult admin()

@@ -1,7 +1,6 @@
 ﻿using JWTAPI.Interface;
 using JWTAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -98,15 +97,16 @@ namespace JWTAPI.Controllers
                 {
                     return Ok();
 
-                    
-                }else return BadRequest("Invalid credentials");
+
+                }
+                else return BadRequest("Invalid credentials");
 
             }
             else return BadRequest();
         }
 
 
-                private async Task<UserInfo> GetUser(string email, string password)
+        private async Task<UserInfo> GetUser(string email, string password)
         {
             return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
