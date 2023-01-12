@@ -24,6 +24,7 @@
                 body: raw,
                 redirect: 'follow'
             };
+                      
 
             fetch("https://localhost:7259/api/token/employee", requestOptions)
                 .then(response => {
@@ -33,10 +34,15 @@
                             sessionStorage.setItem("loginEmployee", document.getElementById("login").value)
                             window.location.replace("https://localhost:7259/api/user/user")
 
-                        } else loginAttempts == loginAttempts--;
-                        console.log(loginAttempts)
+                        } else {
+                            loginAttempts--;
+                            document.getElementById("loginAtempts").innerHTML = "<h3>Pozostały ci " + loginAttempts + " próby</h3>"
+                            console.log(loginAttempts)
+                        }
                     } else {
                         loginAttempts = 5;
+                        document.getElementById("loginAtempts").innerHTML = "<h3>Pozostało ci " + loginAttempts + " prób</h3>"
+                        console.log(loginAttempts)
                         document.getElementById("loginForm").style.display="none";
                         timer();
                     }
@@ -51,7 +57,7 @@
             // Set the date we're counting down to
            // var countDownDate = new Date(Date.now()).getTime() + 900000;  //15 minut
             var countDownDate = new Date(Date.now()).getTime() + 9000;
-            document.getElementById("demo").style.display = "block";
+            document.getElementById("timeToLogin").style.display = "block";
             
             // Update the count down every 1 second
             var x = setInterval(function () {
@@ -69,14 +75,14 @@
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 // Display the result in the element with id="demo"
-                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                document.getElementById("timeToLogin").innerHTML = days + "d " + hours + "h "
                     + minutes + "m " + seconds + "s ";
 
                 // If the count down is finished, write some text
                 if (distance < 0) {
                     clearInterval(x);
                     document.getElementById("loginForm").style.display = "block";
-                    document.getElementById("demo").style.display = "none";
+                    document.getElementById("timeToLogin").style.display = "none";
                 }
             }, 1000);
             
@@ -90,7 +96,7 @@
 <body>
 
     <div id="srodek">
-        <h1>Logowanie do aplikacji</h1>
+        <h1>Logowanie do aplikacji</h1><br />
 
         <div id="loginForm">
             <b>Login</b> <input type="text" id="login" />
@@ -98,9 +104,9 @@
             <br>
             <b>Hasło</b> <input type="password" id="password" />
             <input type="submit" value="Zaloguj" onclick="logIn()" />
-            <input type="submit" value="Timer" onclick="timer()" />
+            <div style="text-align:center;" id="loginAtempts"></div>
         </div>
-        <p id="demo"></p>
+        <p style="text-align:center;" id="timeToLogin"></p>
         </div>
 
 
