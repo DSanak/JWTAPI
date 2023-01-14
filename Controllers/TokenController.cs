@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace JWTAPI.Controllers
 {
@@ -137,10 +138,35 @@ namespace JWTAPI.Controllers
             public string originalString { get; set; }
         }
 
+        private const string SecretKey = "6LdmUPgjAAAAAO_aSEaxiWaO268qBUSfT_3hJpK3";
+
+        [HttpPost("recaptchagoogle")]
+        public async Task<IActionResult> VerifyRecaptcha([FromForm] string token)
+        {
+            using var client = new HttpClient();
+            var response = await client.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={SecretKey}&response={token}");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = JObject.Parse(await response.Content.ReadAsStringAsync());
+                if (jsonResponse.Value<bool>("success"))
+                {
+                    return Ok("reCaptcha solved successfully");
+                }
+                else
+                {
+                    return BadRequest("reCaptcha failed");
+                }
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode, "Error verifying reCaptcha");
+            }
+        }
 
 
 
-        private async Task<UserInfo> GetUser(string email, string password)
+
+            private async Task<UserInfo> GetUser(string email, string password)
         {
             return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
