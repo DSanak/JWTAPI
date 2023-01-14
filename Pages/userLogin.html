@@ -3,9 +3,41 @@
 <head id="head1" runat="server">
     <meta charset="utf-8" />
     <link rel="stylesheet" href="styleuzytkownik.css" type="text/css" />
-
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <script type="text/javascript">
-            let loginAttempts = 5;
+
+
+        function onSubmit(token) {
+            console.log(token)
+
+            var formdata = new FormData();
+            formdata.append("token", token);
+
+            var requestOptions = {
+                method: 'POST',
+                body: formdata,
+                redirect: 'follow'
+            };
+
+            fetch("https://localhost:7259/api/token/recaptchagoogle", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+        }
+
+  grecaptcha.ready(() => {
+    grecaptcha
+      .render("recaptcha", {
+        sitekey: "6LdmUPgjAAAAANgs7Odx0jSo60ytsEYDX1kZ-L3z",
+        callback: onSubmit
+      })
+  });
+
+
+
+
+
+        let loginAttempts = 5;
         function logIn() {
             const login = document.getElementById("login").value
             const password = document.getElementById("password").value
@@ -24,7 +56,7 @@
                 body: raw,
                 redirect: 'follow'
             };
-                      
+
 
             fetch("https://localhost:7259/api/token/employee", requestOptions)
                 .then(response => {
@@ -43,7 +75,7 @@
                         loginAttempts = 5;
                         document.getElementById("loginAtempts").innerHTML = "<h3>Pozostało ci " + loginAttempts + " prób</h3>"
                         console.log(loginAttempts)
-                        document.getElementById("loginForm").style.display="none";
+                        document.getElementById("loginForm").style.display = "none";
                         timer();
                     }
                 })
@@ -53,11 +85,14 @@
         }
 
 
+
+
+
         function timer() {
 
             var countDownDate = new Date(Date.now()).getTime() + 9000;
             document.getElementById("timeToLogin").style.display = "block";
-            
+
             var x = setInterval(function () {
 
                 var now = new Date().getTime();
@@ -78,8 +113,12 @@
                     document.getElementById("timeToLogin").style.display = "none";
                 }
             }, 1000);
-            
+
         }
+
+
+
+
     </script>
 
 
@@ -98,7 +137,10 @@
             <div style="text-align:center;" id="loginAtempts"></div>
         </div>
         <p style="text-align:center;" id="timeToLogin"></p>
-        </div>
+    </div>
+
+    <div id="recaptcha"></div>
+
 
 
 </body>

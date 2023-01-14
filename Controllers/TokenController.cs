@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace JWTAPI.Controllers
 {
@@ -106,7 +108,65 @@ namespace JWTAPI.Controllers
         }
 
 
-        private async Task<UserInfo> GetUser(string email, string password)
+        private static readonly Random _random = new Random();
+        private static readonly string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        private static string RandomString(int length)
+        {
+            return new string(Enumerable.Repeat(_chars, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        //generate the original string here
+
+        [HttpPost("captcha")]
+        public ActionResult<bool> VerifyCaptcha([FromBody] CaptchaDTO captchaDTO)
+        {
+            if (captchaDTO.userInput == captchaDTO.originalString)
+            {
+                return true;
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        public class CaptchaDTO
+        {
+            public string userInput { get; set; }
+            public string originalString { get; set; }
+        }
+
+        private const string SecretKey = "6LdmUPgjAAAAAO_aSEaxiWaO268qBUSfT_3hJpK3";
+
+        [HttpPost("recaptchagoogle")]
+        public async Task<IActionResult> VerifyRecaptcha([FromForm] string token)
+        {
+            using var client = new HttpClient();
+            var response = await client.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={SecretKey}&response={token}");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = JObject.Parse(await response.Content.ReadAsStringAsync());
+                if (jsonResponse.Value<bool>("success"))
+                {
+                    return Ok("reCaptcha solved successfully");
+                }
+                else
+                {
+                    return BadRequest("reCaptcha failed");
+                }
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode, "Error verifying reCaptcha");
+            }
+        }
+
+
+
+
+            private async Task<UserInfo> GetUser(string email, string password)
         {
             return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
