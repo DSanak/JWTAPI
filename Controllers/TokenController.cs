@@ -107,34 +107,46 @@ namespace JWTAPI.Controllers
         }
 
 
-        private static readonly Random _random = new Random();
-        private static readonly string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
+        //generate the original string here
         private static string RandomString(int length)
         {
-            return new string(Enumerable.Repeat(_chars, length)
-                .Select(s => s[_random.Next(s.Length)]).ToArray());
+            var random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var randomString = new string(Enumerable.Repeat(chars, 8)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+            return randomString;
         }
 
-        //generate the original string here
+        
+
+
+        [HttpGet("getCaptcha")]
+        public ActionResult<string> GetCaptcha()
+        {
+            var oryginalString =  RandomString(8);
+            var reverseString = new string(oryginalString.Reverse().ToArray());
+            Response.ContentType = "application/json";
+            return Ok(reverseString);
+        }
 
         [HttpPost("captcha")]
         public ActionResult<bool> VerifyCaptcha([FromBody] CaptchaDTO captchaDTO)
         {
-            if (captchaDTO.userInput == captchaDTO.originalString)
+            var oryginalString = new string(captchaDTO.stringfromAPI.Reverse().ToArray());
+            if (captchaDTO.userInput == oryginalString)
             {
                 return true;
             }
             else
             {
-                return BadRequest();
+                return BadRequest("Podany błędny kod!");
             }
         }
 
         public class CaptchaDTO
         {
             public string userInput { get; set; }
-            public string originalString { get; set; }
+            public string stringfromAPI { get; set; }
         }
 
         private const string SecretKey = "6LdmUPgjAAAAAO_aSEaxiWaO268qBUSfT_3hJpK3";

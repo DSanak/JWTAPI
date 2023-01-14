@@ -76,15 +76,26 @@
 
         }
 
-        const originalUserString = Math.random().toString(36).substring(2, 15);
-        const reversedString = originalUserString.split('').reverse().join('');
-
         function generateCaptcha() {
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
 
-            document.getElementById("captcha").innerHTML = reversedString;
+            fetch("https://localhost:7259/api/token/getCaptcha", requestOptions)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    stringfromAPI = data;
+                    document.getElementById("captcha").innerHTML = data
+                })
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
         }
 
 
+        let stringfromAPI;
         function sendCaptcha() {
             var userInput = document.getElementById("userInput").value;
             var myHeaders = new Headers();
@@ -92,8 +103,10 @@
 
             var raw = JSON.stringify({
                 "userInput": userInput,
-                "originalString": originalUserString
+                "stringfromAPI": stringfromAPI
             });
+
+            console.log(stringfromAPI)
 
             var requestOptions = {
                 method: 'POST',
