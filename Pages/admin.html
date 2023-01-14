@@ -23,6 +23,9 @@
 
                 fetch("https://localhost:7259/api/employee/" + employeID)
                     .then(res => {
+                        if (!res.ok) {
+                            alert("Niepoprawny token?")
+                        }
                         return res.json();
                     })
                     .then(data => {
@@ -55,10 +58,11 @@
 
             fetch("https://localhost:7259/api/user/", requestOptions)
                 .then(res => {
-                    if (res.ok) {
-
+                    if (!res.ok) {
+                        alert("Niepoprawny token?")
+                        return
+                    }else
                         return res.json();
-                    } else alert("Niepoprawny token?")
                 })
                 .then(data => {
                     console.log(usersData);
@@ -125,8 +129,24 @@
         }
 
         function showEmployee() {
-            fetch("https://localhost:7259/api/employee")
-                .then(response => response.json())
+
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer " + token);
+
+
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://localhost:7259/api/employee", requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        alert("Niepoprawny token?")
+
+                    } else return response.json();
+                })
                 .then(data => {
                     document.querySelector('ul.employee').innerHTML = "";
                     data.forEach(employee => {

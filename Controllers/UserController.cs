@@ -121,7 +121,7 @@ namespace JWTAPI.Controllers
             {
 
                 userID = Singleton.Instance.saveIdusera,
-                Descryption = "Blabla",
+                Descryption = "Wyświetlenie administratora o id:" + id,
                 Timestamp = data
             };
 

@@ -50,8 +50,8 @@
 
             fetch("https://localhost:7259/api/employee/" + document.getElementById("emID").value, requestOptions)
                 .then(response => {
-                    if (res.ok) {
-                        alert("Haslo zostało zmienione")
+                    if (response.ok) {
+                        alert("Dane zostały zmienione")
                     }else alet("Wystąpił błąd")
                 })
                 .then(result => console.log(result))

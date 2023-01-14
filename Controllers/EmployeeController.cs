@@ -3,9 +3,9 @@ using JWTAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace JWTAPI.Controllers
 {
-    // [Authorize]
     [Route("api/employee")]
     [ApiController]
     public class EmployeeController : ControllerBase
@@ -19,6 +19,7 @@ namespace JWTAPI.Controllers
             _IUser = IUser;
         }
 
+        //     [Authorize]
         // GET: api/employee>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> Get()
@@ -177,7 +178,7 @@ namespace JWTAPI.Controllers
             var fileContent = System.IO.File.ReadAllText("Pages/styleprofiluzytkownika.css");
             return base.Content(fileContent, "text/css");
         }
-        
+
 
 
         private bool EmployeeExists(int id)

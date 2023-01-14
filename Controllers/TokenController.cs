@@ -3,11 +3,10 @@ using JWTAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json.Linq;
 
 namespace JWTAPI.Controllers
 {
@@ -166,7 +165,7 @@ namespace JWTAPI.Controllers
 
 
 
-            private async Task<UserInfo> GetUser(string email, string password)
+        private async Task<UserInfo> GetUser(string email, string password)
         {
             return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
