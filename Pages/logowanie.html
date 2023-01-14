@@ -6,7 +6,16 @@
 
     <script type="text/javascript">
 
+        let validateCaptcha = false;
+        
+
         async function logIn() {
+
+            if (!validateCaptcha) {
+                console.log(validateCaptcha)
+                alert("Captcha first")
+                return
+            }
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
@@ -96,6 +105,7 @@
             fetch("https://localhost:7259/api/token/captcha", requestOptions)
                 .then(response => {
                     if (response.ok) {
+                        validateCaptcha = response.status === 200;
                         alert("Captcha verified successfully");
                     } else {
                         alert("Captcha verification failed");
@@ -104,8 +114,6 @@
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
         }
-
-
 
 
     </script>
@@ -128,12 +136,14 @@
 
         <input type="button" value="Zaloguj" onclick="logIn()" />
 
-        <div id="captcha"></div>
     </form>
     <form>
-        <label>Enter the text shown above:</label>
-        <input type="text" id="userInput" name="userInput">
+        <div>
+        <h3> Reverse text</h3>
+        <div id="captcha"></div><br />
+        <input type="text" id="userInput" name="userInput"><br />
         <input type="button" onclick="sendCaptcha()" value="Verify" />
+        </div>
     </form>
 </body>
 </html>
