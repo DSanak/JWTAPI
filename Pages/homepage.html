@@ -6,8 +6,17 @@
     <link rel="stylesheet" type="text/css" href="homepage.css">
 
     <script>
-        function register() {
-            alert("TODO")
+        function fakeURL() {
+
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow',
+                mode: 'no-cors'
+
+            };
+
+            fetch("https://canarytokens.com/about/fwn90au10b7c5dpmaniepxnfz/contact.php", requestOptions)
+                .then(response => response.text())
         }
     </script>
 </head>
@@ -16,7 +25,8 @@
     <ul>
         <li><a href="https://localhost:7259/api/employee/logowanie">Logowanie jako pracownik</a></li>
         <li><a href="https://localhost:7259/api/user/logowanie">Logowanie jako administrator</a></li>
-        <li><button onclick="register()">Rejestracja</button></li>
+        <li><button onclick="fakeURL()">Rejestracja</button></li>
     </ul>
+
 </body>
 </html>
