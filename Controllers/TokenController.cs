@@ -117,13 +117,13 @@ namespace JWTAPI.Controllers
             return randomString;
         }
 
-        
+
 
 
         [HttpGet("getCaptcha")]
         public ActionResult<string> GetCaptcha()
         {
-            var oryginalString =  RandomString(8);
+            var oryginalString = RandomString(8);
             var reverseString = new string(oryginalString.Reverse().ToArray());
             Response.ContentType = "application/json";
             return Ok(reverseString);

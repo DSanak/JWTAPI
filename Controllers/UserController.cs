@@ -28,7 +28,7 @@ namespace JWTAPI.Controllers
 
         [Route("homepage.css")]
         [HttpGet]
-        public ActionResult homepagecss()
+        public ActionResult Homepagecss()
         {
             var fileContent = System.IO.File.ReadAllText("Pages/homepage.css");
             return base.Content(fileContent, "text/css");
@@ -42,12 +42,11 @@ namespace JWTAPI.Controllers
             var fileContent = System.IO.File.ReadAllText("Pages/logowanie.html");
             return base.Content(fileContent, "text/html");
 
-
         }
 
         [Route("stylelogowanie.css")]
         [HttpGet]
-        public ActionResult logowaniecss()
+        public ActionResult Logowaniecss()
         {
             var fileContent = System.IO.File.ReadAllText("Pages/stylelogowanie.css");
             return base.Content(fileContent, "text/css");
@@ -56,7 +55,7 @@ namespace JWTAPI.Controllers
         // [Authorize]
         [Route("admin")]
         [HttpGet]
-        public ActionResult admin()
+        public ActionResult Admin()
         {
 
             var fileContent = System.IO.File.ReadAllText("Pages/admin.html");
@@ -67,17 +66,15 @@ namespace JWTAPI.Controllers
 
         [Route("styleadmin.css")]
         [HttpGet]
-        public ActionResult admincss()
+        public ActionResult Admincss()
         {
             var fileContent = System.IO.File.ReadAllText("Pages/styleadmin.css");
             return base.Content(fileContent, "text/css");
-
-
         }
 
         [Route("styleuzytkownik.css")]
         [HttpGet]
-        public ActionResult uzytkownikcss()
+        public ActionResult Uzytkownikcss()
         {
             var fileContent = System.IO.File.ReadAllText("Pages/styleuzytkownik.css");
             return base.Content(fileContent, "text/css");
